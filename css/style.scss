@@ -14,7 +14,7 @@
 
 #logo {
 	width: 230px;
-	position: relative;
+	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
 	margin-top: 10px;
@@ -62,6 +62,9 @@
 		position: relative;
 		width: 360px;
 	}
+	img {
+		display: none;
+	}
 }
 
 .inp-fld {
@@ -100,11 +103,47 @@
 	}
 }
 
-#signup a {
-	text-decoration: none;
-	font-size: 0.8em;
-	color: rgb(189, 189, 189);
-	span {
-		color: white;
+#signup {
+	text-align: center;
+	a {
+		text-decoration: none;
+		font-size: 0.8em;
+		color: rgb(189, 189, 189);
+		span {
+			color: white;
+		}
+	}
+}
+
+@media only screen and (max-width: 460px), screen and (max-height: 540px){
+	#particles-js {
+		display: none;
+	}
+
+	#log-scr {
+		position: absolute;
+		transform: initial;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		border-radius: 0px;
+		padding-top: 0px;
+		h2, h3 {
+			display: none;
+		}
+		form {
+			width: 87%;
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		img {
+			display: block;
+			width: 250px;
+			position: relative;
+			left: 50%;
+			transform: translateX(-50%);
+		}
 	}
 }

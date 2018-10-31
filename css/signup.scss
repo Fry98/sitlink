@@ -30,8 +30,8 @@
 	color: white;
 	width: 600px;
 	padding-top: 20px;
-	padding-right: 20px;
-	// padding-left: 20px;
+	padding-right: 22px;
+	padding-left: 22px;
 	padding-bottom: 17px;
 	border-radius: 7px;
 	border: 1px solid rgb(22, 22, 22);
@@ -58,7 +58,7 @@
 		color: rgb(233, 233, 233);
 	}
 	form {
-		padding-top: 0px;
+		padding-top: 3px;
 		text-align: left;
 		position: relative;
 		width: 100%;
@@ -127,15 +127,15 @@
 
 #left {
 	order: 1;
-	width: 36%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-right: 20px;
 }
 
 #right {
 	order: 2;
-	width: 64%;
+	width: 68%;
 }
 
 #picker {
@@ -166,6 +166,8 @@
 	width: 100%;
 	display: flex;
 	flex-direction: row;
+	box-sizing: content-box;
+	justify-content: center;
 }
 
 #image {

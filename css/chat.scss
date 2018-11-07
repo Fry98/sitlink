@@ -30,10 +30,7 @@ main {
 
 #sidebar {
   background: rgb(35, 35, 40);
-  width: 270px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 17em;
   z-index: 1;
 }
 
@@ -44,4 +41,24 @@ main {
   justify-content: center;
   align-items: center;
   z-index: 0;
+}
+
+#chans {
+  list-style-type: none;
+  margin: 0;
+  margin-top: 1em;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  li {
+    width: 14.8em;
+    height: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5em;
+    border: 1px solid white;
+    border-radius: 7px;
+  }
 }

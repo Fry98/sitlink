@@ -53,12 +53,11 @@ main {
 
 #msg-box {
   position: absolute;
-  bottom: 0px;
+  bottom: 20px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0px;
   textarea {
     width: 80%;
     background: rgb(78, 81, 85);

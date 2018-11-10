@@ -68,6 +68,10 @@ main {
     color: rgb(223, 223, 223);
     box-shadow: 0px 1px 5px black;
     resize: none;
+    &:focus {
+      outline: none;
+      border-color: rgb(28, 126, 192);
+    }
   }
 }
 

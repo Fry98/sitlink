@@ -17,6 +17,12 @@ $('#msg-box textarea').blur(()=>{
   $('#msg-box').css('border-color', '');
 });
 
-$('.msg img').click(()=>{
-  alert('clicked img')
+$('.msg img').click(function(){
+  $('#popup img')[0].src = this.src;
+  $('#popup').removeClass('popup-hide');
+  // alert(this.src);
+});
+
+$('#popup').click(function(){
+  $(this).addClass('popup-hide');
 });

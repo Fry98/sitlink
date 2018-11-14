@@ -128,6 +128,35 @@ main {
   }
 }
 
+#popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.548);
+  transition: ease-in-out 0.2s;
+  opacity: 1;
+  img {
+    border-radius: 7px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90%;
+    height: auto;
+    box-shadow: 0px 2px 5px rgb(0, 0, 0);
+  }
+}
+
+.popup-hide {
+  pointer-events: none;
+  opacity: 0 !important;
+  transition-duration: 0.2s;
+}
+
 .selected {
   background: rgb(28, 126, 192) !important;
   color: white !important;
@@ -161,7 +190,7 @@ main {
 
 .msg-text {
   margin-left: 4em;
-  margin-top: -1.45em;
+  margin-top: -1.43em;
   padding-right: 1.5em;
   font-size: 0.9em;
   color: rgb(223, 223, 223);
@@ -178,7 +207,8 @@ main {
 .own {
   color: rgb(255, 230, 0);
   .pro-img {
-    border: 0.8px solid rgb(255, 230, 0);
+    box-sizing: border-box;
+    border: 2px solid rgb(255, 230, 0);
   }
 }
 

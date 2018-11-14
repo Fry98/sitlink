@@ -115,6 +115,10 @@
 }
 
 @media only screen and (max-width: 460px), screen and (max-height: 540px){
+	body {
+		background: rgb(54, 57, 63);
+	}
+
 	#particles-js {
 		display: none;
 	}
@@ -128,6 +132,8 @@
 		height: 100%;
 		border-radius: 0px;
 		padding-top: 0px;
+		border: none;
+		box-shadow: none;
 		h2, h3 {
 			display: none;
 		}

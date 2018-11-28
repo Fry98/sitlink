@@ -12,7 +12,7 @@
 </head>
 <body>
   <div id='popup' class='popup-hide'>
-    <img src="assets/nms.jpg">
+    <img src="assets/nms.jpg" alt='User Image'>
   </div>
   <header>
     HEADER
@@ -44,7 +44,7 @@
             <span>one chemistry boi</span>
           </div>
           <div class='msg-text'>
-            <img src="assets/nms.jpg">
+            <img src="assets/nms.jpg" alt='User Image'>
           </div>
         </div>
         <div class='msg'>
@@ -89,7 +89,7 @@
             <span>one chemistry boi</span>
           </div>
           <div class='msg-text'>
-            <img src="assets/nice.jpg">
+            <img src="assets/nice.jpg" alt='User Image'>
           </div>
         </div>
       </div>

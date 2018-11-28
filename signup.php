@@ -26,11 +26,11 @@
 							</div>
 							<div class='inp-box'>
 								<label for="mail">E-MAIL</label>
-								<input id='mail' type="text" class='inp-fld' name='mail' required>
+								<input id='mail' type="email" class='inp-fld' name='mail' required>
 							</div>
 							<div class='inp-box'>
 								<label for="pwd">PASSWORD</label>
-								<input id='pwd 'type="password" class='inp-fld' name='pwd' required>
+								<input id='pwd' type="password" class='inp-fld' name='pwd' required>
 							</div>
 							<div class='inp-box'>
 								<label for="pwd-con">CONFIRM PASSWORD</label>
@@ -39,7 +39,7 @@
 						</div>
 						<div id='left'>
 							<div id="pick-wrap">
-								<label for="picker">PROFILE PICTURE</label>
+								<label>PROFILE PICTURE</label>
 								<div id='picker' onclick="document.getElementById('img-sel').click()">
 									<div id='pick-ui'>
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"/></svg>

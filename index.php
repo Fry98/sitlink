@@ -15,7 +15,7 @@
 	<div id='log-scr'>
 		<h2>Welcome back!</h2>
 		<h3>You are just one click away...</h3>
-		<form>
+		<form method='POST'>
 			<img src="assets/logo.png" alt='Website Logo'>
 			<div class='inp-box'>
 				<label for="nick">USERNAME</label>
@@ -23,13 +23,13 @@
 			</div>
 			<div class='inp-box'>
 				<label for="pwd">PASSWORD</label>
-				<input id='pwd 'type="password" class='inp-fld' name='pwd' required>
+				<input id='pwd' type="password" class='inp-fld' name='pwd' required>
 			</div>
 			<div id='sub-wrap'>
 				<input type="submit" value="Login">
 			</div>
 			<div id='signup'>
-				<a href='/signup'>Don't have an account yet? <span>Sign up!</span></a>
+				<a href='signup.php'>Don't have an account yet? <span>Sign up!</span></a>
 			</div>
 		</form>
 	</div>

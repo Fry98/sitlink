@@ -246,6 +246,24 @@
 	}
 }
 
+#loader {
+	background: rgba(0, 0, 0, 0.459);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	svg {
+		width: 50%;
+		max-width: 150px;
+		filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.589));
+	}
+}
+
 @media only screen and (max-width: 570px){
 	#flex-wrap {
 		flex-direction: column;

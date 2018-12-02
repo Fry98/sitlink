@@ -31,7 +31,7 @@
       <div id='content'>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/assets/ph_pi.png");'></div>
+            <div class='pro-img' style='background-image: url("assets/ph_pi.png");'></div>
             <span>Fryer Fry</span>
           </div>
           <div class='msg-text'>
@@ -40,7 +40,7 @@
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/assets/nice.jpg");'></div>
+            <div class='pro-img' style='background-image: url("assets/nice.jpg");'></div>
             <span>one chemistry boi</span>
           </div>
           <div class='msg-text'>
@@ -49,7 +49,7 @@
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/assets/ph_pi.png");'></div>
+            <div class='pro-img' style='background-image: url("assets/ph_pi.png");'></div>
             <span>Fryer Fry</span>
           </div>
           <div class='msg-text'>
@@ -58,7 +58,7 @@
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/assets/nice.jpg");'></div>
+            <div class='pro-img' style='background-image: url("assets/nice.jpg");'></div>
             <span>one chemistry boi</span>
           </div>
           <div class='msg-text'>
@@ -67,7 +67,7 @@
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/assets/ph_pi.png");'></div>
+            <div class='pro-img' style='background-image: url("assets/ph_pi.png");'></div>
             <span>Fryer Fry</span>
           </div>
           <div class='msg-text'>
@@ -76,7 +76,7 @@
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/assets/nice.jpg");'></div>
+            <div class='pro-img' style='background-image: url("assets/nice.jpg");'></div>
             <span>one chemistry boi</span>
           </div>
           <div class='msg-text'>
@@ -85,7 +85,7 @@
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/assets/nice.jpg");'></div>
+            <div class='pro-img' style='background-image: url("assets/nice.jpg");'></div>
             <span>one chemistry boi</span>
           </div>
           <div class='msg-text'>

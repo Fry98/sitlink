@@ -1,3 +1,12 @@
+<?php
+  // Session check
+  session_start();
+  if (empty($_SESSION)) {
+		header('Location: ./');
+		die();	
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

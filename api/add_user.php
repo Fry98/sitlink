@@ -22,6 +22,21 @@
 			die("Invalid e-mail address!");
 		}
 
+		// Sets up the MySQL connection
+		$conn = new PDO('mysql:host=localhost;dbname=sitlink', 'root', '');
+		$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);		
+
+		// Checks for dupliate username
+		$query = $conn->prepare("SELECT COUNT(*) FROM users WHERE nick = :nick");
+		$query->execute(array(
+			'nick' => $nick
+		));
+		$res = $query->fetch();
+		if ($res[0] > 0) {
+			http_response_code(400);
+			die('Nickname is already taken!');	
+		}
+
 		// Uploads the submitted profile picture to Imgur
 		$imgId = imgurUpload($pic);
 		if ($imgId === null) {
@@ -32,8 +47,7 @@
 		// Hash password
 		$pwdHash = password_hash($pwd, PASSWORD_DEFAULT);
 		
-		// Add new user to the database
-		$conn = new PDO('mysql:host=localhost;dbname=sitlink', 'root', '');
+		// Adds new user to the database
 		$query = $conn->prepare("INSERT INTO users (id, nick, mail, img, password) VALUES (UUID_SHORT(), :nick, :mail, :img, :pwd)");
 		$query->execute(array(
 			'nick' => $nick,
@@ -41,8 +55,10 @@
 			'img' => $imgId,
 			'pwd' => $pwdHash
 		));
+		die();
 	} else {
+		// Bad request handling
 		http_response_code(400);
-		die('Invalid request');
+		die('Invalid request!');
 	}
 ?>

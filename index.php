@@ -1,3 +1,7 @@
+<?php
+	session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,3 +43,24 @@
 	</script>
 </body>
 </html>
+
+<?php
+	if (isset($_POST['nick']) && isset($_POST['pwd'])) {
+		$nick = htmlspecialchars($_POST['nick']);
+		$pwd = htmlspecialchars($_POST['pwd']);
+		$conn = new PDO('mysql:host=localhost;dbname=sitlink', 'root', '');
+		$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+		$query = $conn->prepare("SELECT * FROM users WHERE nick = :nick");
+		$query->execute(array(
+			'nick' => $nick
+		));
+		$res = $query->fetch();
+		if (empty($res)) {
+			echo "User doesn't exist!";
+		} else if (password_verify($pwd, $res['password'])) {
+			echo "Correct password!";
+		} else {
+			echo "Wrong password!";
+		}
+	}
+?>

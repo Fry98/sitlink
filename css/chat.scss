@@ -14,8 +14,8 @@ header {
   background: rgb(28, 126, 192);
   height: 55px;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.288);
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
   z-index: 1;
   font-weight: bold;
@@ -211,8 +211,41 @@ main {
   }
 }
 
-@media only screen and (max-width: 1000px) {
-  header {
-    background: red;
+#burger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  fill: white;
+  position: absolute;
+  left: 20px;
+}
+
+#lo-wrap {
+  text-decoration: none;
+  position: absolute;
+  right: 14px;
+}
+
+#logout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    fill: white;
+    width: auto;
+    height: 34px;
   }
+}
+
+@media only screen and (max-width: 1000px) {
+ #sidebar {
+   z-index: 1;
+   position: absolute;
+   height: 100%;
+   box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.37);
+   transform: translateX(-100%);
+ }
+ .msg-text img {
+   max-width: 100%;
+ }
 }

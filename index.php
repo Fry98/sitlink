@@ -3,7 +3,7 @@
 	session_start();
 	if (!empty($_SESSION)) {
 		header('Location: ./chat.php');
-		die();	
+		die();
 	}
 ?>
 <!DOCTYPE html>

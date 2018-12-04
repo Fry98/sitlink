@@ -29,3 +29,8 @@ $('.msg img').click(function() {
 $('#popup').click(function() {
   $(this).addClass('popup-hide');
 });
+
+// Toggle sidebar
+$('#burger').click(() => {
+  $('#sidebar').toggleClass('open');
+});

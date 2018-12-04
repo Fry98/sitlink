@@ -26,6 +26,7 @@ main {
   display: flex;
   flex-direction: row;
   z-index: 0;
+  position: relative;
 }
 
 #sidebar {
@@ -212,7 +213,7 @@ main {
 }
 
 #burger {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   fill: white;
@@ -237,15 +238,24 @@ main {
   }
 }
 
+.open {
+  transform: translateY(0%) !important;
+  transition: 0.5s ease-in-out;
+}
+
 @media only screen and (max-width: 1000px) {
- #sidebar {
-   z-index: 1;
-   position: absolute;
-   height: 100%;
-   box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.37);
-   transform: translateX(-100%);
- }
- .msg-text img {
-   max-width: 100%;
- }
+  #sidebar {
+    z-index: 1;
+    position: absolute;
+    height: 100%;
+    box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.37);
+    transform: translateX(-100%);
+    transition: 0.5s ease-in-out;
+  }
+  .msg-text img {
+    max-width: 100%;
+  }
+  #burger {
+    display: flex;
+  }
 }

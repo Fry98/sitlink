@@ -24,7 +24,7 @@
 
 		// Sets up the MySQL connection
 		$conn = new PDO('mysql:host=localhost;dbname=sitlink', 'root', '');
-		$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);		
+		$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
 		// Checks for dupliate username
 		$query = $conn->prepare("SELECT COUNT(*) FROM users WHERE nick = :nick");

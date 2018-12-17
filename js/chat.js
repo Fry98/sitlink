@@ -1,5 +1,8 @@
 let currChan = 0;
 
+// Scroll to the chat bottom
+$('#content')[0].scrollTop = $('#content')[0].scrollHeight;
+
 // Channel switching
 $('#chans li').click(function() {
   let newIndex = $('#chans li').index(this);

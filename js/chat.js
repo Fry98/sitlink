@@ -26,7 +26,6 @@ $('#msg-box textarea').blur(() => {
 $('.msg img').click(function() {
   $('#popup img')[0].src = this.src;
   $('#popup').removeClass('popup-hide');
-  // alert(this.src);
 });
 
 $('#popup').click(function() {
@@ -36,4 +35,20 @@ $('#popup').click(function() {
 // Toggle sidebar
 $('#burger').click(() => {
   $('#sidebar').toggleClass('open');
+});
+
+// Textarea autosizing
+$('textarea').on('input', function() {
+  const cont = $('#content')[0];
+  let rescroll = false;
+  if (cont.scrollHeight - cont.scrollTop - cont.clientHeight < 1) {
+    rescroll = true;
+  }
+  this.style.height = "auto";
+  this.style.height = (this.scrollHeight-8)+"px";
+  const bottom = ($('textarea')[0].clientHeight + 60) + "px";
+  $('#content').css('padding-bottom', bottom);
+  if (rescroll) {
+    cont.scrollTop = cont.scrollHeight;
+  }
 });

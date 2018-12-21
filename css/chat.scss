@@ -83,8 +83,17 @@ main {
     color: rgb(223, 223, 223);
     resize: none;
     border-left: 1px solid rgb(116, 116, 116);
+    max-height: 80px;
     &:focus {
       outline: none;
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    &::placeholder {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
   svg {
@@ -107,6 +116,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 1em;
   cursor: pointer;
   li {
     width: 89%;
@@ -222,14 +232,12 @@ main {
   justify-content: center;
   align-items: center;
   fill: white;
-  position: absolute;
-  left: 20px;
+  padding: 0px 13px;
 }
 
 #lo-wrap {
   text-decoration: none;
-  position: absolute;
-  right: 14px;
+  padding: 0px 13px;
 }
 
 #logout {
@@ -248,22 +256,14 @@ main {
   transition: 0.5s ease-in-out;
 }
 
-#name-wrap {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
 #sub-name {
-  width: 89%;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  font-size: 1.6em;
+  font-weight: 400;
   white-space: nowrap;
-  font-size: 22px;
-  font-weight: 600;
-  margin-top: 15px;
-  margin-bottom: 20px;
-  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  padding-left: 13px;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -280,5 +280,10 @@ main {
   }
   #burger {
     display: flex;
+  }
+  #sub-name {
+    text-align: center;
+    padding: 0px;
+    font-size: 1.3em;
   }
 }

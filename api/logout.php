@@ -2,6 +2,6 @@
   // Destroying the session
   session_start();
   session_destroy();
-  header('Location: ../');
+  header('Location: /~tomanfi2');
   die();
 ?>

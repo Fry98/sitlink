@@ -2,7 +2,7 @@
   // Session check
   session_start();
   if (empty($_SESSION)) {
-		header('Location: ../');
+		header('Location: /~tomanfi2');
 		die();
   }
   
@@ -18,7 +18,7 @@
   ));
   $res = $query->fetch();
   if (empty($res)) {
-		header('Location: ./nexus');
+		header('Location: /~tomanfi2/c/nexus');
     die();
   }
   $name = $res[1];
@@ -32,20 +32,22 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- TODO: MODIFY THIS FOR PROD -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-  <link rel="stylesheet" href="../css/chat.min.css">
+  <link rel="stylesheet" href="/~tomanfi2/css/chat.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="shortcut icon" type="image/png" href="/~tomanfi2/assets/favicon.png"/>
   <title>SITLINK</title>
 </head>
 <body>
+  <input type="file" name="img-sel" id='img-sel' accept="image/*">
   <div id='popup' class='popup-hide'>
-    <img src="../assets/nms.jpg" alt='User Image'>
+    <img src="/~tomanfi2/assets/nms.jpg" alt='User Image'>
   </div>
   <header>
     <div id='burger'>
       <svg height="32px" id="Layer_1" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/></svg>
     </div>
     <div id='sub-name'><?= $name ?></div>
-    <a id='lo-wrap' href="../api/logout.php">
+    <a id='lo-wrap' href="/~tomanfi2/api/logout.php">
       <div id='logout'>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
       </div>
@@ -65,25 +67,25 @@
       <div id='content'>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("../assets/ph_pi.png");'></div>
+            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/ph_pi.png");'></div>
             <span>Fryer Fry</span>
           </div>
           <div class='msg-text'>
-            L
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec vitae arcu. Maecenas libero. Curabitur sagittis hendrerit ante.
           </div>
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("../assets/nice.jpg");'></div>
+            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/nice.jpg");'></div>
             <span>one chemistry boi</span>
           </div>
           <div class='msg-text'>
-            <img src="../assets/nms.jpg" alt='User Image'>
+            <img src="/~tomanfi2/assets/nms.jpg" alt='User Image'>
           </div>
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("../assets/ph_pi.png");'></div>
+            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/ph_pi.png");'></div>
             <span>Fryer Fry</span>
           </div>
           <div class='msg-text'>
@@ -92,7 +94,7 @@
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("../assets/nice.jpg");'></div>
+            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/nice.jpg");'></div>
             <span>one chemistry boi</span>
           </div>
           <div class='msg-text'>
@@ -101,7 +103,7 @@
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("../assets/ph_pi.png");'></div>
+            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/ph_pi.png");'></div>
             <span>Fryer Fry</span>
           </div>
           <div class='msg-text'>
@@ -110,7 +112,7 @@
         </div>
         <div class='msg'>
           <div class='nametag'>
-            <div class='pro-img' style='background-image: url("../assets/nice.jpg");'></div>
+            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/nice.jpg");'></div>
             <span>one chemistry boi</span>
           </div>
           <div class='msg-text'>
@@ -130,6 +132,6 @@
   <script>
     const sub = "<?= strtolower($_GET['sub']) ?>";
   </script>
-  <script src="../js/chat.js"></script>
+  <script src="/~tomanfi2/js/chat.js"></script>
 </body>
 </html>

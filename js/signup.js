@@ -1,5 +1,5 @@
 let reader = new FileReader();
-particlesJS.load('particles-js', 'assets/particles.json');
+particlesJS.load('particles-js', '/~tomanfi2/assets/particles.json');
 
 // File selector for profile picture
 $("#img-sel").change(function() {
@@ -72,7 +72,7 @@ $('form').submit((e) => {
   $('#loader').css('display', 'flex');
 
   // POST request to the SITLINK API
-  $.ajax('api/add_user.php', {
+  $.ajax('/~tomanfi2/api/add_user.php', {
     method: 'POST',
     data: {
       nick,
@@ -81,7 +81,7 @@ $('form').submit((e) => {
       pic
     },
     success() {
-      location.href = './';
+      location.href = '/~tomanfi2';
     },
     error(res) {
       // Hides loader and alerts error message

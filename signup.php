@@ -4,18 +4,19 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" href="css/signup.min.css">
+	<link rel="stylesheet" href="/~tomanfi2/css/signup.min.css">
 	<!-- TODO: MODIFY THIS FOR PROD -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> 
-	<script src="js/lib/particles.min.js"></script>
+	<script src="/~tomanfi2/js/lib/particles.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="shortcut icon" type="image/png" href="/~tomanfi2/assets/favicon.png"/>
 	<title>SITLINK</title>
 </head>
 <body>
 	<div id='loader'>
 		<svg width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;"><circle cx="50" cy="50" fill="none" ng-attr-stroke="{{config.color}}" ng-attr-stroke-width="{{config.width}}" ng-attr-r="{{config.radius}}" ng-attr-stroke-dasharray="{{config.dasharray}}" stroke="rgb(28, 126, 192)" stroke-width="15" r="40" stroke-dasharray="188.49555921538757 64.83185307179586" transform="rotate(163.515 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1.1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
 	</div>
-	<img id='logo' src="assets/logo.png" alt='Website Logo'>
+	<img id='logo' src="/~tomanfi2/assets/logo.png" alt='Website Logo'>
 	<div id='log-scr'>
 		<div id='main-wrap'>
 			<h2>Sign Up</h2>
@@ -60,6 +61,6 @@
 		</div>
 	</div>
   <div id="particles-js"></div>
-	<script src='js/signup.js'></script>
+	<script src='/~tomanfi2/js/signup.js'></script>
 </body>
 </html>

@@ -1,16 +1,16 @@
-particlesJS.load('particles-js', 'assets/particles.json');
+particlesJS.load('particles-js', '/~tomanfi2/assets/particles.json');
 
 // Login form submission
 $('form').submit((e) => {
   e.preventDefault();
-  $.ajax('api/login.php', {
+  $.ajax('/~tomanfi2/api/login.php', {
     method: 'POST',
     data: {
       nick: $('#nick').val(),
       pwd: $('#pwd').val()
     },
     success() {
-      location.href = './c/nexus';
+      location.href = '/~tomanfi2/c/nexus';
     },
     error(res) {
       alert(res.responseText);

@@ -9,6 +9,7 @@ $('#chans li').click(function() {
   if(newIndex !== currChan){
     $('#chans li')[currChan].classList.remove('selected');
     $(this).addClass('selected');
+    $('#sidebar').toggleClass('open');
     currChan = newIndex;
   }
 });
@@ -45,10 +46,15 @@ $('textarea').on('input', function() {
     rescroll = true;
   }
   this.style.height = "auto";
-  this.style.height = (this.scrollHeight-8)+"px";
-  const bottom = ($('textarea')[0].clientHeight + 60) + "px";
+  this.style.height = (this.scrollHeight - 8) + "px";
+  const bottom = ($('textarea')[0].clientHeight + 58) + "px";
   $('#content').css('padding-bottom', bottom);
   if (rescroll) {
     cont.scrollTop = cont.scrollHeight;
   }
+});
+
+// Image selector
+$('#img').click(() => {
+  $('#img-sel').click();
 });

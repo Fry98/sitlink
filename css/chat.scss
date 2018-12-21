@@ -103,7 +103,6 @@ main {
 #chans {
   list-style-type: none;
   margin: 0;
-  margin-top: 1em;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -148,8 +147,7 @@ main {
     max-width: 90%;
     max-height: 90%;
     box-shadow: 0px 2px 5px rgb(0, 0, 0);
-    transition-duration: 0.2s;
-    filter: none;
+    transition: 0.2s ease-in-out;
   }
 }
 
@@ -160,8 +158,7 @@ main {
   img {
     max-width: 60% !important;
     max-height: 60% !important;
-    transition-duration: 0.2s;
-    filter: blur(5px) !important;
+    transition: 0.2s ease-in-out;
   }
 }
 
@@ -246,27 +243,27 @@ main {
   }
 }
 
-#user {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-#pro-img {
-	background-size: cover;
-	background-position: center center;
-  height: 40px;
-  width: 40px;
-  display: inline-block;
-  margin-right: 7px;
-}
-
 .open {
   transform: translateY(0%) !important;
   transition: 0.5s ease-in-out;
+}
+
+#name-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#sub-name {
+  width: 89%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 @media only screen and (max-width: 1000px) {

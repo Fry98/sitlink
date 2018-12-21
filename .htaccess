@@ -1,1 +1,3 @@
 Options -Indexes
+RewriteEngine On
+RewriteRule ^c/([A-Za-z0-9_\-]+)$ chat.php?sub=$1 [NC]

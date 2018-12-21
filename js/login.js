@@ -10,7 +10,7 @@ $('form').submit((e) => {
       pwd: $('#pwd').val()
     },
     success() {
-      location.href = './chat.php';
+      location.href = './c/nexus';
     },
     error(res) {
       alert(res.responseText);

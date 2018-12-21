@@ -2,7 +2,7 @@
 	// Chat redirect
 	session_start();
 	if (!empty($_SESSION)) {
-		header('Location: ./chat.php');
+		header('Location: ./c/nexus');
 		die();
 	}
 ?>

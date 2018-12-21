@@ -9,6 +9,7 @@
 		// Connects to MySQL database
 		$conn = new PDO('mysql:host=localhost;dbname=sitlink', 'root', '');
 		$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		// Verification of the credentials
 		$query = $conn->prepare("SELECT * FROM users WHERE nick = :nick");

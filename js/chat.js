@@ -39,22 +39,41 @@ $('#burger').click(() => {
 });
 
 // Textarea autosizing
-$('textarea').on('input', function() {
+$('#msg').on('input', function() {
   const cont = $('#content')[0];
   let rescroll = false;
   if (cont.scrollHeight - cont.scrollTop - cont.clientHeight < 1) {
     rescroll = true;
   }
-  this.style.height = "auto";
-  this.style.height = (this.scrollHeight - 8) + "px";
-  const bottom = ($('textarea')[0].clientHeight + 58) + "px";
-  $('#content').css('padding-bottom', bottom);
+  resize(this);
   if (rescroll) {
     cont.scrollTop = cont.scrollHeight;
   }
 });
 
-// Image selector
-$('#img').click(() => {
-  $('#img-sel').click();
+// Message submission via Enter key
+$('#msg').keydown(function(e) {
+  if (e.keyCode === 13 && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
 });
+
+// Message submission via Send button
+$('#submit').click(sendMessage);
+
+// Image selector
+$('#img').click($('#img-sel').click);
+
+// Submit message to the API endpoint
+function sendMessage() {
+  $('#msg').val('');
+  resize($('#msg')[0]);
+}
+
+function resize(el) {
+  el.style.height = "auto";
+  el.style.height = (el.scrollHeight - 8) + "px";
+  const bottom = (el.clientHeight + 58) + "px";
+  $('#content').css('padding-bottom', bottom);
+}

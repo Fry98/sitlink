@@ -65,7 +65,9 @@ main {
   border-radius: 7px 0px 0px 7px;
   border-right: 1px solid #101011;
   color: rgb(225, 225, 225);
+  transition-duration: 0.1s;
   &:hover {
+    transition-duration: 0.1s;
     background: rgb(46, 46, 50);
     color: rgb(255, 255, 255);
   }
@@ -80,10 +82,10 @@ main {
   fill: white;
   border-radius: 0px 7px 7px 0px;
   &:hover {
-    #flw-hover {
+    .flw-hover {
       display: block !important;
     }
-    #flw-circle {
+    .flw-idle {
       display: none !important;
     }
     background: rgb(69, 212, 105);
@@ -94,7 +96,15 @@ main {
   }
 }
 
-#flw-hover {
+.unflw:hover {
+  background: rgb(255, 56, 56) !important;
+}
+
+.flw-hover {
+  display: none;
+}
+
+.flw-invis {
   display: none;
 }
 

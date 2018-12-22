@@ -32,6 +32,70 @@ main {
 #sidebar {
   background: rgb(35, 35, 40);
   width: 17em;
+  display: flex;
+  flex-direction: column;
+}
+
+#ctrls {
+  width: 100%;
+  height: 4.2em;
+  background: #161616;
+  box-shadow: 0px -2px 2px rgba(0, 0, 0, 0.356);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // border-top: 1px solid #101011;
+}
+
+#btn-wrap {
+  display: flex;
+  border: 1px solid #101011;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+#subs {
+  background: #47474b;
+  font-weight: 500;
+  width: 12em;
+  height: 2.7em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px 0px 0px 7px;
+  border-right: 1px solid #101011;
+  color: rgb(225, 225, 225);
+  &:hover {
+    background: rgb(46, 46, 50);
+    color: rgb(255, 255, 255);
+  }
+}
+
+#flw {
+  width: 2.7em;
+  background: #232328;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  fill: white;
+  border-radius: 0px 7px 7px 0px;
+  &:hover {
+    #flw-hover {
+      display: block !important;
+    }
+    #flw-circle {
+      display: none !important;
+    }
+    background: rgb(69, 212, 105);
+  }
+  svg {
+    width: 1.7em;
+    height: auto;
+  }
+}
+
+#flw-hover {
+  display: none;
 }
 
 #chat {
@@ -116,9 +180,16 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1em;
-  cursor: pointer;
+  padding-top: 1em;
+  padding-bottom: 0.5em;
+  flex: 1;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   li {
+    flex-shrink: 0;
+    cursor: pointer;
     width: 89%;
     height: 2em;
     display: flex;
@@ -258,7 +329,7 @@ main {
 
 #sub-name {
   font-size: 1.6em;
-  font-weight: 400;
+  font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -286,6 +357,7 @@ main {
     display: flex;
   }
   #sub-name {
+    font-weight: 400;
     text-align: center;
     padding: 0px;
     font-size: 1.3em;

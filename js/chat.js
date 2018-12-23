@@ -84,6 +84,23 @@ $('#flw-overlay').click(function(e) {
   $('#flw-overlay').toggleClass('flw-hide');
 });
 
+// Switching tabs in the Subchat Menu
+$('#flw-button1').click(function() {
+  if (this.classList.contains('flw-option-active')) {
+    return;
+  }
+  $(this).addClass('flw-option-active');
+  $('#flw-button2').removeClass('flw-option-active');
+});
+
+$('#flw-button2').click(function() {
+  if (this.classList.contains('flw-option-active')) {
+    return;
+  }
+  $(this).addClass('flw-option-active');
+  $('#flw-button1').removeClass('flw-option-active');
+});
+
 // Submit message to the API endpoint
 function sendMessage() {
   $('#msg').val('');

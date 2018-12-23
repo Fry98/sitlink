@@ -199,10 +199,10 @@ main {
   }
   li {
     flex-shrink: 0;
+    padding: 0.4em 0px;
+    text-align: center;
     cursor: pointer;
     width: 89%;
-    height: 2em;
-    display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 0.5em;
@@ -211,6 +211,8 @@ main {
     border-radius: 7px;
     color: rgb(216, 216, 216);
     transition-duration: 0.1s;
+    overflow: hidden;
+    text-overflow: ellipsis;
     &:hover {
       color: white;
       background: rgb(46, 46, 50);

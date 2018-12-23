@@ -9,7 +9,7 @@ $('#chans li').click(function() {
   if(newIndex !== currChan){
     $('#chans li')[currChan].classList.remove('selected');
     $(this).addClass('selected');
-    $('#sidebar').toggleClass('open');
+    $('#sidebar').removeClass('open');
     currChan = newIndex;
   }
 });
@@ -38,7 +38,7 @@ $('#burger').click(() => {
   $('#sidebar').toggleClass('open');
 });
 
-// Textarea autosizing
+// Multiline textarea handling
 $('#msg').on('input', function() {
   const cont = $('#content')[0];
   let rescroll = false;
@@ -63,7 +63,26 @@ $('#msg').keydown(function(e) {
 $('#submit').click(sendMessage);
 
 // Image selector
-$('#img').click($('#img-sel').click);
+$('#img').click(() => {
+  $('#img-sel').click();
+});
+
+// Accessing the Subchat Menu
+$('#subs').click(() => {
+  $('#flw-overlay').toggleClass('flw-hide');
+  $('#sidebar').removeClass('open');
+});
+
+$('#flw-list-close').click(() => {
+  $('#flw-overlay').toggleClass('flw-hide');
+});
+
+$('#flw-overlay').click(function(e) {
+  if (e.target !== this) {
+    return;
+  }
+  $('#flw-overlay').toggleClass('flw-hide');
+});
 
 // Submit message to the API endpoint
 function sendMessage() {
@@ -71,6 +90,7 @@ function sendMessage() {
   resize($('#msg')[0]);
 }
 
+// Textarea autosizing
 function resize(el) {
   el.style.height = "auto";
   el.style.height = (el.scrollHeight - 8) + "px";

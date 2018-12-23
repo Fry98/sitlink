@@ -352,6 +352,7 @@ main {
 }
 
 #flw-overlay {
+  transition-duration: 0.2s;
   background: rgba(0, 0, 0, 0.548);
   position: absolute;
   top: 0;
@@ -365,6 +366,7 @@ main {
 }
 
 #flw-list {
+  transition-duration: 0.2s;
   width: 900px;
   height: 600px;
   transform-origin: center center;
@@ -384,13 +386,23 @@ main {
   display: flex;
 }
 
-#flw-list-content {
+#flw-content-wrap {
   background: rgb(35, 35, 40);
   width: 100%;
   flex: 1;
   border-radius: 0px 0px 7px 7px;
   box-shadow: 0px -2px 3px rgba(0, 0, 0, 0.397);
   z-index: 0;
+  overflow-y: scroll;
+  padding: 0px 10px;
+  box-sizing: border-box;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+#flw-list-content {
+  padding-bottom: 10px;
 }
 
 #flw-list-filler {
@@ -441,6 +453,68 @@ main {
   color: white;
 }
 
+.flw-list-item {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.5em;
+  background: #47474b;
+  border: 1px solid rgb(22, 22, 22);
+  border-radius: 7px;
+  &:hover {
+    background: #56565a;
+    h1 {
+      color:white;
+    }
+    .flw-item-desc {
+      color: rgb(225, 225, 225);
+    }
+  }
+  h1 {
+    margin: 0;
+    margin-left: 15px;
+    margin-top: 10px;
+    color: rgb(225, 225, 225);
+    font-size: 2.2em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+.flw-item-desc {
+  color: rgb(207, 207, 207);
+  margin-left: 25px;
+  margin-bottom: 15px;
+  padding-right: 25px;
+  word-break: break-word;
+}
+
+.flw-hide {
+  opacity: 0;
+  pointer-events: none;
+  transition-duration: 0.2s;
+  #flw-list {
+    transition-duration: 0.2s;
+    transform-origin: center center;
+    transform: scale(.9);
+  }
+}
+
+@media only screen and (max-height: 630px) {
+  #flw-list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .flw-list-option {
+    font-size: 1.2em;
+    width: auto;
+    padding-right: 0.4em;
+  }
+}
+
 @media only screen and (max-width: 1000px) {
   #sidebar {
     z-index: 1;
@@ -461,5 +535,17 @@ main {
     text-align: center;
     padding: 0px;
     font-size: 1.3em;
+  }
+  #flw-list {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .flw-list-option {
+    font-size: 1.2em;
+    width: auto;
+    padding-right: 0.4em;
   }
 }

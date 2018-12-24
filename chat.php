@@ -22,6 +22,25 @@
     die();
   }
   $name = $res[1];
+
+  // Fetch subchat channels
+  $query = $conn->prepare("SELECT chan_name FROM chans WHERE sub_id = :sub");
+  $query->execute(array(
+    'sub' => $_GET['sub']
+  ));
+  $res = $query->fetchAll();
+  $first = true;
+
+  // Make first channel selected by default
+  function firstItem() {
+    global $first;
+    if ($first) {
+      $first = false;
+      return "class='selected'";
+    } else {
+      return "";
+    }
+  }
 ?>
 
 <!DOCTYPE html>
@@ -108,11 +127,9 @@
   <main>
     <aside id='sidebar'>
       <ul id='chans'>
-        <li class='selected'>#general</li>
-        <li>#videogames</li>
-        <li>#coding</li>
-        <li>#mockup</li>
-        <li>#anime</li>
+        <?php foreach ($res as $item) { ?>
+          <li <?= firstItem() ?> >#<?= $item[0] ?></li>
+        <?php } ?>
       </ul>
       <div id='ctrls'>
         <div id='btn-wrap'>
@@ -192,7 +209,8 @@
     </div>
   </main>
   <script>
-    const sub = "<?= strtolower($_GET['sub']) ?>";
+    const sub = "<?= $_GET['sub'] ?>";
+    let chan = "<?= $res[0][0] ?>";
   </script>
   <script src="/~tomanfi2/js/chat.js"></script>
 </body>

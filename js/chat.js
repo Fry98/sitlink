@@ -1,6 +1,7 @@
 let currChan = 0;
 let flwList;
 let flwTab = false;
+let chanName = chans[0];
 
 // Inital page setup
 setTimeout(() => {
@@ -16,6 +17,7 @@ $('#chans li').click(function() {
     $(this).addClass('selected');
     $('#sidebar').removeClass('open');
     currChan = newIndex;
+    chanName = chans[currChan];
   }
 });
 
@@ -121,8 +123,19 @@ $('#flw').click(followHandler);
 
 // Submit message to the API endpoint
 function sendMessage() {
-  $('#msg').val('');
-  resize($('#msg')[0]);
+  $.ajax('/~tomanfi2/api/message.php', {
+    method: 'POST',
+    data: {
+      sid: sub,
+      chan: chanName,
+      img: false,
+      content: $('#msg').val()
+    },
+    success() {
+      $('#msg').val('');
+      resize($('#msg')[0]);    
+    }
+  });
 }
 
 // Textarea autosizing

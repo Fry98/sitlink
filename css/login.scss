@@ -75,6 +75,10 @@
 	border: 1px solid rgb(22, 22, 22);
 	border-radius: 5px;
 	color: white;
+	&:focus {
+		outline: none;
+		border-color: rgb(28, 126, 192);
+	}
 }
 
 .inp-box {

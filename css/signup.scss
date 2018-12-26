@@ -76,6 +76,10 @@
 	border: 1px solid rgb(22, 22, 22);
 	border-radius: 5px;
 	color: white;
+	&:focus {
+		outline: none;
+		border-color: rgb(28, 126, 192);
+	}
 }
 
 .inp-box {
@@ -264,6 +268,19 @@
 	}
 }
 
+.hide-plus {
+	svg {
+		opacity: 0 !important;
+		transition-duration: 0.4s !important;
+	}
+	&:hover {
+		svg {
+			opacity: 1 !important;
+			transition-duration: 0.4s !important;
+		}
+	}
+}
+
 @media only screen and (max-width: 570px){
 	#flex-wrap {
 		flex-direction: column;
@@ -296,19 +313,6 @@
 	#sub-wrap {
 		input {
 			width: 150px;
-		}
-	}
-}
-
-.hide-plus {
-	svg {
-		opacity: 0 !important;
-		transition-duration: 0.4s !important;
-	}
-	&:hover {
-		svg {
-			opacity: 1 !important;
-			transition-duration: 0.4s !important;
 		}
 	}
 }

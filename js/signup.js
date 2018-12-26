@@ -9,8 +9,8 @@ $("#img-sel").change(function() {
     alert('Selected file has to be an image');
     return;
   }
-  if(imgFile.size > 5242880){
-    alert('Image has to be smaller than 5MB');
+  if(imgFile.size > 2097152){
+    alert('Image has to be smaller than 2MB');
     return;
   }
   reader.readAsDataURL(imgFile);

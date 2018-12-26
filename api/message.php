@@ -48,7 +48,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
           ];
           $json[] = $temp;
         }
-        die(json_encode($json));
+        die(json_encode(array_reverse($json)));
       }
     }
     break;
@@ -81,8 +81,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
       // Uploads image via Imgur API
       $content = htmlspecialchars($_POST['content']);
-      if ($_POST['img'] === true) {
+      $imgBool = false;
+      if ($_POST['img'] === "true") {
         $content = imgurUpload($content);
+        $imgBool = true;
       }
 
       // Adds message to the DB
@@ -91,7 +93,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         'uid' => $_SESSION['id'],
         'sid' => $_POST['sid'],
         'chan' => $_POST['chan'],
-        'img' => $_POST['img'],
+        'img' => $imgBool,
         'cont' => $content
       ));
       $msgId = $conn->lastInsertId();
@@ -107,7 +109,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
       $json = array(
         "nick" => $res['nick'],
         "upic" => $res['img'],
-        "img" => $_POST['img'],
+        "img" => $imgBool,
         "content" => $content
       );
       die(json_encode($json));

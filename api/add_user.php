@@ -21,6 +21,10 @@ if (isset($_POST['nick']) && isset($_POST['mail']) && isset($_POST['pwd']) && $_
 		http_response_code(400);
 		die("Invalid e-mail address!");
 	}
+	if (strlen($pic) > 2097152) {
+		http_response_code(400);
+		die('Selected image file is too big!');
+	}
 
 	// Sets up the MySQL connection
 	$conn = new PDO('mysql:host=localhost;dbname=sitlink', getenv('MYSQL_USER'), getenv('MYSQL_PASSWD'));

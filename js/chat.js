@@ -2,6 +2,7 @@ let currChan = 0;
 let flwList;
 let flwTab = false;
 let chanName = chans[0];
+let reader = new FileReader();
 
 // Inital page setup
 setTimeout(() => {
@@ -74,6 +75,36 @@ $('#img').click(() => {
   $('#img-sel').click();
 });
 
+// Image submission
+$('#img-sel').change(function() {
+  const imgFile = this.files[0];
+  this.value = null;
+  if(!imgFile.type.includes('image')){
+    alert('Selected file has to be an image');
+    return;
+  }
+  if(imgFile.size > 2097152){
+    alert('Image has to be smaller than 2MB');
+    return;
+  }
+  reader.readAsDataURL(imgFile);
+});
+
+reader.onload = () => {
+  $.ajax('/~tomanfi2/api/message.php', {
+    method: 'POST',
+    data: {
+      sid: sub,
+      chan: chanName,
+      img: true,
+      content: reader.result
+    },
+    success() {
+      // TODO: Draw Message 
+    }
+  });
+};
+
 // Accessing the Subchat Menu
 $('#subs').click(() => {
   $.ajax('/~tomanfi2/api/follow.php', {
@@ -132,6 +163,7 @@ function sendMessage() {
       content: $('#msg').val()
     },
     success() {
+      // TODO: Draw Message
       $('#msg').val('');
       resize($('#msg')[0]);    
     }

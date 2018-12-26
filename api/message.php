@@ -24,7 +24,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
       if (ctype_digit($lim) && ctype_digit($skip)) {
         
         // Man,... fuck SQL...
-        $query = $conn->prepare("SELECT users.nick, users.img, messages.image, messages.content FROM messages INNER JOIN users ON messages.sender = users.id WHERE messages.sub_id = :sub AND messages.channel = :chan ORDER BY messages.id DESC LIMIT :lim OFFSET :skip");
+        $query = $conn->prepare("SELECT users.nick, users.img, messages.image, messages.content, messages.id FROM messages INNER JOIN users ON messages.sender = users.id WHERE messages.sub_id = :sub AND messages.channel = :chan ORDER BY messages.id DESC LIMIT :lim OFFSET :skip");
         $query->execute(array(
           "sub" => $_GET['sub'],
           "chan" => $_GET['chan'],
@@ -41,6 +41,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $isImg = false;
           }
           $temp = [
+            "id" => $row[4],
             "nick" => $row[0],
             "upic" => $row[1],
             "img" => $isImg,
@@ -48,7 +49,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
           ];
           $json[] = $temp;
         }
-        die(json_encode(array_reverse($json)));
+        die(json_encode($json));
       }
     }
     break;
@@ -79,12 +80,20 @@ switch ($_SERVER['REQUEST_METHOD']) {
         die('Invalid channel name');
       }
 
-      // Uploads image via Imgur API
-      $content = htmlspecialchars($_POST['content']);
+      // Uploads image via Imgur API and prepares message text
+      $content = $_POST['content'];
       $imgBool = false;
       if ($_POST['img'] === "true") {
         $content = imgurUpload($content);
         $imgBool = true;
+      } else {
+        $content = trim($content);
+        if (strlen($content) === 0) {
+          http_response_code(400);
+          die("Message can't be empty!");
+        }
+        $content = htmlspecialchars($content);
+        $content = str_replace("\n", '<br>', $content);
       }
 
       // Adds message to the DB
@@ -107,6 +116,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
       // Forming the response object
       $json = array(
+        "id" => $msgId,
         "nick" => $res['nick'],
         "upic" => $res['img'],
         "img" => $imgBool,

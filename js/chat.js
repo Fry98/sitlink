@@ -1,14 +1,23 @@
+// Initial declarations
 let currChan = 0;
 let flwList;
 let flwTab = false;
 let chanName = chans[0];
 let reader = new FileReader();
+let lastId = 0;
+let skip = 0;
+let lastMsg = false;
+let scrollDeac = true;
+const MESSAGE_LIMIT = 30;
 
 // Inital page setup
-setTimeout(() => {
-  updateFollowToggle();
-  $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
-}, 0);
+updateFollowToggle();
+fetchMessages(true);
+
+// Message polling request
+setInterval(() => {
+  // TODO: THIS
+}, 3000);
 
 // Channel switching
 $('#chans li').click(function() {
@@ -19,6 +28,12 @@ $('#chans li').click(function() {
     $('#sidebar').removeClass('open');
     currChan = newIndex;
     chanName = chans[currChan];
+    scrollDeac = true;
+    $('#content').html('');
+    skip = 0;
+    lastMsg = false;
+    lastId = 0;
+    fetchMessages(true);
   }
 });
 
@@ -32,7 +47,7 @@ $('#msg-box textarea').blur(() => {
 });
 
 // Image pop-up
-$('.msg img').click(function() {
+$('body').on('click', '.chat-img', function() {
   $('#popup img')[0].src = this.src;
   $('#popup').removeClass('popup-hide');
 });
@@ -99,8 +114,10 @@ reader.onload = () => {
       img: true,
       content: reader.result
     },
-    success() {
-      // TODO: Draw Message 
+    success(res) {
+      const newMsg = JSON.parse(res);
+      lastId = newMsg.id;
+      insertMessages([newMsg], false, true);
     }
   });
 };
@@ -152,20 +169,36 @@ $('#flw-button2').click(function() {
 
 $('#flw').click(followHandler);
 
+// Fetch previous messages
+$('#content').on('scroll', function() {
+  if ($(this).scrollTop() <= 0 && !scrollDeac) {
+    fetchMessages(false);
+  }
+});
+
 // Submit message to the API endpoint
 function sendMessage() {
+  let cont = $('#msg').val();
+  cont = cont.trim();
+  if (cont.length === 0) {
+    alert("Message can't be empty!");
+    return;
+  }
+  $('#msg').val('');
+  resize($('#msg')[0]);
   $.ajax('/~tomanfi2/api/message.php', {
     method: 'POST',
     data: {
       sid: sub,
       chan: chanName,
       img: false,
-      content: $('#msg').val()
+      content: cont
     },
-    success() {
-      // TODO: Draw Message
-      $('#msg').val('');
-      resize($('#msg')[0]);    
+    success(res) {
+      const newMsg = JSON.parse(res);
+      lastId = newMsg.id;
+      insertMessages([newMsg], false);
+      $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
     }
   });
 }
@@ -244,4 +277,86 @@ function updateFollows() {
                                     <div class='flw-item-desc'>${item.desc}</div>
                                   </div></a>`);
   }
+}
+
+// Insert message into the DOM
+function insertMessages(msgArr, prepend, scroll) {
+  for (const msg of msgArr) {
+    if (msg.img) {
+      if (prepend) {
+        $('#content').prepend(imgTemplate(msg, scroll));
+      } else {
+        $('#content').append(imgTemplate(msg, scroll));
+      }
+    } else {
+      if (prepend) {
+        $('#content').prepend(textTemplate(msg));
+      } else {
+        $('#content').append(textTemplate(msg));
+      }
+    }
+    skip++;
+  }
+}
+
+// Template for inserting text messages
+function textTemplate(msg) {
+  return `<div class='msg'>
+            <div class='nametag'>
+              <div class='pro-img' style='background-image: url("https://i.imgur.com/${msg.upic}m.png");'></div>
+              <span>${msg.nick}</span>
+            </div>
+            <div class='msg-text'>${msg.content}</div>
+          </div>`;
+}
+
+// Template for inserting image messages
+function imgTemplate(msg, scroll) {
+  return `<div class='msg'>
+            <div class='nametag'>
+              <div class='pro-img' style='background-image: url("https://i.imgur.com/${msg.upic}t.png);'></div>
+              <span>${msg.nick}</span>
+            </div>
+            <div class='msg-text'>
+              <img class='chat-img' src="https://i.imgur.com/${msg.content}.png" ${onloader(scroll)} alt='User Image'>
+            </div>
+          </div>`;
+  function onloader(scroll) {
+    if (scroll) {
+      return "onload='scrollDown()'";
+    }
+    return '';
+  }
+}
+
+// Fetches a block of messages from the current chanel
+function fetchMessages(scroll) {
+  if (!lastMsg) {
+    $.ajax(`/~tomanfi2/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
+      method: 'GET',
+      success(res) {
+        const msgArr = JSON.parse(res);
+        if (msgArr.length < MESSAGE_LIMIT) {
+          lastMsg = true;
+        }
+        let origSize = $('#content')[0].scrollHeight;
+        insertMessages(msgArr, true, scroll);
+        if (!scroll) {
+          let offset = $('#content')[0].scrollHeight - origSize;
+          $('#content').scrollTop(offset);
+        } else {
+          $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
+          scrollDeac = false;
+          if (msgArr[0] !== undefined) {
+            lastId = msgArr[0].id;
+          }
+        }
+      }
+    });
+  }
+}
+
+// It just somehow makes it work. Please don't ask me why or how! The whole scrolling thing is a complete mess.
+function scrollDown() {
+  $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
 }

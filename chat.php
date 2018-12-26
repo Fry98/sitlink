@@ -137,62 +137,7 @@
       </div>
     </aside>
     <div id='chat'>
-      <div id='content'>
-        <div class='msg'>
-          <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/ph_pi.png");'></div>
-            <span>Fryer Fry</span>
-          </div>
-          <div class='msg-text'>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec vitae arcu. Maecenas libero. Curabitur sagittis hendrerit ante.
-          </div>
-        </div>
-        <div class='msg'>
-          <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/nice.jpg");'></div>
-            <span>one chemistry boi</span>
-          </div>
-          <div class='msg-text'>
-            <img src="/~tomanfi2/assets/nms.jpg" alt='User Image'>
-          </div>
-        </div>
-        <div class='msg'>
-          <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/ph_pi.png");'></div>
-            <span>Fryer Fry</span>
-          </div>
-          <div class='msg-text'>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec vitae arcu. Maecenas libero. Curabitur sagittis hendrerit ante. Integer tempor. Nunc auctor. Curabitur ligula sapien, pulvinar a vestibulum quis, facilisis vel sapien. Nunc auctor. Maecenas sollicitudin. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Maecenas fermentum, sem in pharetra pellentesque, velit turpis volutpat ante, in pharetra metus odio a lectus. Praesent vitae arcu tempor neque lacinia pretium. Nulla pulvinar eleifend sem.
-          </div>
-        </div>
-        <div class='msg'>
-          <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/nice.jpg");'></div>
-            <span>one chemistry boi</span>
-          </div>
-          <div class='msg-text'>
-            Maecenas libero. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Fusce nibh. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Suspendisse sagittis ultrices augue. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis pulvinar. Praesent vitae arcu tempor neque lacinia pretium. Nulla accumsan, elit sit amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel leo. Mauris elementum mauris vitae tortor.
-          </div>
-        </div>
-        <div class='msg'>
-          <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/ph_pi.png");'></div>
-            <span>Fryer Fry</span>
-          </div>
-          <div class='msg-text'>
-            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec vitae arcu. Maecenas libero. Curabitur sagittis hendrerit ante. Integer tempor. Nunc auctor. Curabitur ligula sapien, pulvinar a vestibulum quis, facilisis vel sapien. Nunc auctor. Maecenas sollicitudin. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Maecenas fermentum, sem in pharetra pellentesque, velit turpis volutpat ante, in pharetra metus odio a lectus. Praesent vitae arcu tempor neque lacinia pretium. Nulla pulvinar eleifend sem.
-          </div>
-        </div>
-        <div class='msg'>
-          <div class='nametag'>
-            <div class='pro-img' style='background-image: url("/~tomanfi2/assets/nice.jpg");'></div>
-            <span>one chemistry boi</span>
-          </div>
-          <div class='msg-text'>
-            Maecenas libero. Vestibulum erat nulla, ullamcorper nec, rutrum non, nonummy ac, erat. Fusce nibh. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Suspendisse sagittis ultrices augue. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis pulvinar. Praesent vitae arcu tempor neque lacinia pretium. Nulla accumsan, elit sit amet varius semper, nulla mauris mollis quam, tempor suscipit diam nulla vel leo. Mauris elementum mauris vitae tortor.
-          </div>
-        </div>
-      </div>
+      <div id='content'></div>
       <div id='msg-box-wrap'>
         <div id='msg-box'>
             <svg id='img' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>

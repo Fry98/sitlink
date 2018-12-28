@@ -25,6 +25,9 @@ setTimeout(setInterval(() => {
         $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
         lastId = msgArr[msgArr.length - 1].id;
       }
+    },
+    error() {
+      location.reload();
     }
   });
 }, 3000), 3000);
@@ -123,11 +126,6 @@ reader.onload = () => {
       chan: chanName,
       img: true,
       content: reader.result
-    },
-    success(res) {
-      const newMsg = JSON.parse(res);
-      lastId = newMsg.id;
-      insertMessages([newMsg], false, true);
     }
   });
 };
@@ -209,6 +207,9 @@ function sendMessage() {
       lastId = newMsg.id;
       insertMessages([newMsg], false);
       $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
+    },
+    error() {
+      location.reload();
     }
   });
 }
@@ -366,7 +367,7 @@ function fetchMessages(scroll) {
   }
 }
 
-// It just somehow makes it work. Please don't ask me why or how! The whole scrolling thing is a complete mess.
+// Scrolls to the bottom of the chat window (triggered when image is loaded)
 function scrollDown() {
   $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
 }

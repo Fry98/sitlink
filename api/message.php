@@ -1,5 +1,6 @@
 <?php
 require_once '../lib/upload.php';
+require_once '../lib/latest.php';
 session_start();
 
 // Checks for API access permission
@@ -22,6 +23,29 @@ switch ($_SERVER['REQUEST_METHOD']) {
       $lim = $_GET['lim'];
       $skip = $_GET['skip'];
       if (ctype_digit($lim) && ctype_digit($skip)) {
+
+        // Checks Subchat ID validity
+        $query = $conn->prepare("SELECT COUNT(*) FROM subs WHERE id = :sid");
+        $query->execute(array(
+          "sid" => $_GET['sub']
+        ));
+        $res = $query->fetch();
+        if ($res[0] === 0) {
+          http_response_code(400);
+          die("Invalid Subchat ID");
+        }
+
+        // Checks channel validity
+        $query = $conn->prepare("SELECT COUNT(*) FROM chans WHERE sub_id = :sid AND chan_name = :chan");
+        $query->execute(array(
+          "sid" => $_GET['sub'],
+          "chan" => $_GET['chan']
+        ));
+        $res = $query->fetch();
+        if ($res[0] === 0) {
+          http_response_code(400);
+          die('Invalid channel name');
+        }
         
         // Man,... fuck SQL...
         $query = $conn->prepare("SELECT users.nick, users.img, messages.image, messages.content, messages.id FROM messages INNER JOIN users ON messages.sender = users.id WHERE messages.sub_id = :sub AND messages.channel = :chan ORDER BY messages.id DESC LIMIT :lim OFFSET :skip");
@@ -54,10 +78,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
     }
     break;
   case 'POST':
-    // Checks request validity
-    if (isset($_POST['sid']) && isset($_POST['chan']) && isset($_POST['img']) && isset($_POST['content'])) {
 
-      // Checks Subchat id validity
+    // Checks request validity
+    if (isset($_POST['sid']) && isset($_POST['chan']) && isset($_POST['img']) && isset($_POST['content']) && isset($_POST['last']) && ctype_digit($_POST['last'])) {
+
+      // Checks Subchat ID validity
       $query = $conn->prepare("SELECT COUNT(*) FROM subs WHERE id = :sid");
       $query->execute(array(
         "sid" => $_POST['sid']
@@ -105,24 +130,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
         'img' => $imgBool,
         'cont' => $content
       ));
-      $msgId = $conn->lastInsertId();
 
-      // Fetch user data to form a response object
-      $query = $conn->prepare("SELECT nick, img FROM users WHERE id = :uid");
-      $query->execute(array(
-        'uid' => $_SESSION['id']
-      ));
-      $res = $query->fetch();
+      if ($imgBool) {
+        die();
+      }
 
-      // Forming the response object
-      $json = array(
-        "id" => $msgId,
-        "nick" => $res['nick'],
-        "upic" => $res['img'],
-        "img" => $imgBool,
-        "content" => $content
-      );
-      die(json_encode($json));
+      // Fetches latest messages and sends them to the client
+      getLatest($conn, $_POST['sid'], $_POST['chan'], $_POST['last']);
     }
 }
 

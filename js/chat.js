@@ -141,8 +141,6 @@ $('#img-sel').change(function() {
 });
 
 reader.onload = () => {
-  clearInterval(updateLoop);
-  abortRequests();
   $.ajax('/~tomanfi2/api/message.php', {
     method: 'POST',
     data: {
@@ -150,10 +148,12 @@ reader.onload = () => {
       chan: chanName,
       img: true,
       content: reader.result,
-      lastId
+      last: lastId
     },
-    success() {
-      resetUpdateLoop();
+    error(_, status) {
+      if (status !== 'abort') {
+        location.reload();
+      }
     }
   });
 };
@@ -208,6 +208,7 @@ $('#flw').click(followHandler);
 // Fetch previous messages
 $('#content').on('scroll', function() {
   if ($(this).scrollTop() <= 0 && !scrollDeac) {
+    scrollDeac = true;
     fetchMessages(false);
   }
 });
@@ -231,17 +232,30 @@ function sendMessage() {
       chan: chanName,
       img: false,
       content: cont,
-      lastId
+      last: lastId
+    },
+    beforeSend(xhr) {
+      XHRPool.push(xhr);
     },
     success(res) {
       const newMsg = JSON.parse(res);
-      lastId = newMsg.id;
-      insertMessages([newMsg], false);
+      lastId = newMsg[newMsg.length - 1].id;
+      insertMessages(newMsg, false, true);
       $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
-      resetUpdateLoop();
+      if (XHRPool.length === 1) {
+        resetUpdateLoop();
+      }
     },
-    error() {
-      location.reload();
+    error(_, status) {
+      if (status !== 'abort') {
+        location.reload();
+      }
+    },
+    complete(xhr) {
+      const index = XHRPool.indexOf(xhr);
+      if (index !== -1) {
+        XHRPool.splice(index, 1);
+      }
     }
   });
 }
@@ -396,6 +410,11 @@ function fetchMessages(scroll) {
           if (msgArr[0] !== undefined) {
             lastId = msgArr[0].id;
           }
+        }
+      },
+      error(_, status) {
+        if (status !== 'abort') {
+          location.reload();
         }
       },
       complete(xhr) {

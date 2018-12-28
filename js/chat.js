@@ -8,29 +8,49 @@ let lastId = 0;
 let skip = 0;
 let lastMsg = false;
 let scrollDeac = true;
+let updateLoop;
+let XHRPool = [];
 const MESSAGE_LIMIT = 30;
 
 // Inital page setup
 updateFollowToggle();
 fetchMessages(true);
+resetUpdateLoop();
 
 // Message polling request
-setTimeout(setInterval(() => {
-  $.ajax(`/~tomanfi2/api/update.php?sub=${sub}&chan=${chanName}&last=${lastId}`, {
-    method: 'GET',
-    success(res) {
-      const msgArr = JSON.parse(res);
-      if (msgArr.length > 0) {
-        insertMessages(msgArr, false, true);
-        $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
-        lastId = msgArr[msgArr.length - 1].id;
+function resetUpdateLoop() {
+  clearInterval(updateLoop);
+  setTimeout(
+    updateLoop = setInterval(() => {
+      if (XHRPool.length === 0) {
+        $.ajax(`/~tomanfi2/api/update.php?sub=${sub}&chan=${chanName}&last=${lastId}`, {
+          method: 'GET',
+          beforeSend (xhr) {
+            XHRPool.push(xhr);
+          },
+          success(res) {
+            const msgArr = JSON.parse(res);
+            if (msgArr.length > 0) {
+              insertMessages(msgArr, false, true);
+              $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
+              lastId = msgArr[msgArr.length - 1].id;
+            }
+          },
+          error(_, status) {
+            if (status !== 'abort') {
+              location.reload();
+            }
+          },
+          complete(xhr) {
+            const index = XHRPool.indexOf(xhr);
+            if (index !== -1) {
+              XHRPool.splice(index, 1);
+            }
+          }
+        });
       }
-    },
-    error() {
-      location.reload();
-    }
-  });
-}, 3000), 3000);
+  }, 3000), 3000);
+}
 
 // Channel switching
 $('#chans li').click(function() {
@@ -46,6 +66,8 @@ $('#chans li').click(function() {
     skip = 0;
     lastMsg = false;
     lastId = 0;
+    resetUpdateLoop();
+    abortRequests();
     fetchMessages(true);
   }
 });
@@ -119,13 +141,19 @@ $('#img-sel').change(function() {
 });
 
 reader.onload = () => {
+  clearInterval(updateLoop);
+  abortRequests();
   $.ajax('/~tomanfi2/api/message.php', {
     method: 'POST',
     data: {
       sid: sub,
       chan: chanName,
       img: true,
-      content: reader.result
+      content: reader.result,
+      lastId
+    },
+    success() {
+      resetUpdateLoop();
     }
   });
 };
@@ -186,6 +214,8 @@ $('#content').on('scroll', function() {
 
 // Submit message to the API endpoint
 function sendMessage() {
+  clearInterval(updateLoop);
+  abortRequests();
   let cont = $('#msg').val();
   cont = cont.trim();
   if (cont.length === 0) {
@@ -200,13 +230,15 @@ function sendMessage() {
       sid: sub,
       chan: chanName,
       img: false,
-      content: cont
+      content: cont,
+      lastId
     },
     success(res) {
       const newMsg = JSON.parse(res);
       lastId = newMsg.id;
       insertMessages([newMsg], false);
       $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
+      resetUpdateLoop();
     },
     error() {
       location.reload();
@@ -345,6 +377,9 @@ function fetchMessages(scroll) {
   if (!lastMsg) {
     $.ajax(`/~tomanfi2/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
       method: 'GET',
+      beforeSend(xhr) {
+        XHRPool.push(xhr);
+      },
       success(res) {
         const msgArr = JSON.parse(res);
         if (msgArr.length < MESSAGE_LIMIT) {
@@ -362,6 +397,12 @@ function fetchMessages(scroll) {
             lastId = msgArr[0].id;
           }
         }
+      },
+      complete(xhr) {
+        const index = XHRPool.indexOf(xhr);
+        if (index !== -1) {
+          XHRPool.splice(index, 1);
+        }
       }
     });
   }
@@ -371,3 +412,16 @@ function fetchMessages(scroll) {
 function scrollDown() {
   $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
 }
+
+// Aborts all pending requests
+function abortRequests() {
+  XHRPool.forEach((req) => {
+    req.abort();
+  });
+  XHRPool = [];
+}
+
+// Stop the Update loop when logging out
+$('#lo-wrap').click(() => {
+  clearInterval(updateLoop);
+});

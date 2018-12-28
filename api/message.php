@@ -32,7 +32,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
           "skip" => $skip
         ));
         $res = $query->fetchAll();
-        
+
         // Forming the response object
         $json = [];
         foreach ($res as $row) {

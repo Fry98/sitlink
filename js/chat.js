@@ -15,9 +15,19 @@ updateFollowToggle();
 fetchMessages(true);
 
 // Message polling request
-setInterval(() => {
-  // TODO: THIS
-}, 3000);
+setTimeout(setInterval(() => {
+  $.ajax(`/~tomanfi2/api/update.php?sub=${sub}&chan=${chanName}&last=${lastId}`, {
+    method: 'GET',
+    success(res) {
+      const msgArr = JSON.parse(res);
+      if (msgArr.length > 0) {
+        insertMessages(msgArr, false, true);
+        $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
+        lastId = msgArr[msgArr.length - 1].id;
+      }
+    }
+  });
+}, 3000), 3000);
 
 // Channel switching
 $('#chans li').click(function() {

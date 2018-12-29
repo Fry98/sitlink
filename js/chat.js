@@ -9,8 +9,8 @@ let skip = 0;
 let lastMsg = false;
 let scrollDeac = true;
 let updateLoop;
-let UpdatePool = [];
-let MessagePool = [];
+let UpdatePool = null;
+let MessagePool = null;
 const MESSAGE_LIMIT = 30;
 
 // Inital page setup
@@ -22,11 +22,11 @@ startUpdateLoop();
 function startUpdateLoop(immediate) {
   clearInterval(updateLoop);
   function update() {
-    if (UpdatePool.length === 0) {
+    if (UpdatePool === null) {
       $.ajax(`/~tomanfi2/api/update.php?sub=${sub}&chan=${chanName}&last=${lastId}`, {
         method: 'GET',
         beforeSend (xhr) {
-          UpdatePool.push(xhr);
+          UpdatePool = xhr;
         },
         success(res) {
           const msgArr = JSON.parse(res);
@@ -42,10 +42,7 @@ function startUpdateLoop(immediate) {
           }
         },
         complete(xhr) {
-          const index = UpdatePool.indexOf(xhr);
-          if (index !== -1) {
-            UpdatePool.splice(index, 1);
-          }
+          UpdatePool = null;
         }
       });
     }
@@ -382,7 +379,7 @@ function fetchMessages() {
     $.ajax(`/~tomanfi2/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
       method: 'GET',
       beforeSend(xhr) {
-        MessagePool.push(xhr);
+        MessagePool = xhr;
       },
       success(res) {
         const msgArr = JSON.parse(res);
@@ -401,10 +398,7 @@ function fetchMessages() {
         }
       },
       complete(xhr) {
-        const index = MessagePool.indexOf(xhr);
-        if (index !== -1) {
-          MessagePool.splice(index, 1);
-        }
+        MessagePool = null;
       }
     });
   }
@@ -417,7 +411,7 @@ function initChannel() {
   $.ajax(`/~tomanfi2/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
     method: 'GET',
     beforeSend(xhr) {
-      MessagePool.push(xhr);
+      MessagePool = xhr;
     },
     success(res) {
       const msgArr = JSON.parse(res);
@@ -438,10 +432,7 @@ function initChannel() {
       }
     },
     complete(xhr) {
-      const index = MessagePool.indexOf(xhr);
-      if (index !== -1) {
-        MessagePool.splice(index, 1);
-      }
+      MessagePool = null;
     }
   });
 }
@@ -453,18 +444,18 @@ function scrollDown() {
 
 // Aborts all pending Update requests
 function abortRequests() {
-  UpdatePool.forEach((req) => {
-    req.abort();
-  });
-  UpdatePool = [];
+  if (UpdatePool !== null) {
+    UpdatePool.abort();
+    UpdatePool = null;
+  }
 }
 
 // Aborts all pending Message requests
 function abortMessage() {
-  MessagePool.forEach((req) => {
-    req.abort();
-  });
-  MessagePool = [];
+  if (MessagePool !== null) {
+    MessagePool.abort();
+    MessagePool = null;
+  }
 }
 
 // Stop the Update loop when logging out

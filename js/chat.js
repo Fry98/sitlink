@@ -9,47 +9,51 @@ let skip = 0;
 let lastMsg = false;
 let scrollDeac = true;
 let updateLoop;
-let XHRPool = [];
+let UpdatePool = [];
+let MessagePool = [];
 const MESSAGE_LIMIT = 30;
 
 // Inital page setup
 updateFollowToggle();
-fetchMessages(true);
-resetUpdateLoop();
+initChannel();
+startUpdateLoop();
 
 // Message polling request
-function resetUpdateLoop() {
+function startUpdateLoop(immediate) {
   clearInterval(updateLoop);
-  setTimeout(
-    updateLoop = setInterval(() => {
-      if (XHRPool.length === 0) {
-        $.ajax(`/~tomanfi2/api/update.php?sub=${sub}&chan=${chanName}&last=${lastId}`, {
-          method: 'GET',
-          beforeSend (xhr) {
-            XHRPool.push(xhr);
-          },
-          success(res) {
-            const msgArr = JSON.parse(res);
-            if (msgArr.length > 0) {
-              insertMessages(msgArr, false, true);
-              $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
-              lastId = msgArr[msgArr.length - 1].id;
-            }
-          },
-          error(_, status) {
-            if (status !== 'abort') {
-              location.reload();
-            }
-          },
-          complete(xhr) {
-            const index = XHRPool.indexOf(xhr);
-            if (index !== -1) {
-              XHRPool.splice(index, 1);
-            }
+  function update() {
+    if (UpdatePool.length === 0) {
+      $.ajax(`/~tomanfi2/api/update.php?sub=${sub}&chan=${chanName}&last=${lastId}`, {
+        method: 'GET',
+        beforeSend (xhr) {
+          UpdatePool.push(xhr);
+        },
+        success(res) {
+          const msgArr = JSON.parse(res);
+          if (msgArr.length > 0) {
+            insertMessages(msgArr, false, true);
+            $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
+            lastId = msgArr[msgArr.length - 1].id;
           }
-        });
-      }
-  }, 3000), 3000);
+        },
+        error(_, status) {
+          if (status !== 'abort') {
+            location.reload();
+          }
+        },
+        complete(xhr) {
+          const index = UpdatePool.indexOf(xhr);
+          if (index !== -1) {
+            UpdatePool.splice(index, 1);
+          }
+        }
+      });
+    }
+  }
+  if (immediate) {
+    update();
+  }
+  updateLoop = setInterval(update, 3000);
 }
 
 // Channel switching
@@ -66,9 +70,8 @@ $('#chans li').click(function() {
     skip = 0;
     lastMsg = false;
     lastId = 0;
-    resetUpdateLoop();
     abortRequests();
-    fetchMessages(true);
+    initChannel();
   }
 });
 
@@ -141,18 +144,22 @@ $('#img-sel').change(function() {
 });
 
 reader.onload = () => {
+  clearInterval(updateLoop);
+  abortRequests();
+  const currChan = chanName;
   $.ajax('/~tomanfi2/api/message.php', {
     method: 'POST',
     data: {
       sid: sub,
       chan: chanName,
       img: true,
-      content: reader.result,
-      last: lastId
+      content: reader.result
     },
-    error(_, status) {
-      if (status !== 'abort') {
-        location.reload();
+    complete() {
+      if (chanName === currChan) {
+        startUpdateLoop(true);
+      } else {
+        console.log('not gonna happen');
       }
     }
   });
@@ -208,8 +215,9 @@ $('#flw').click(followHandler);
 // Fetch previous messages
 $('#content').on('scroll', function() {
   if ($(this).scrollTop() <= 0 && !scrollDeac) {
+    console.log('trigger');
     scrollDeac = true;
-    fetchMessages(false);
+    fetchMessages();
   }
 });
 
@@ -225,36 +233,18 @@ function sendMessage() {
   }
   $('#msg').val('');
   resize($('#msg')[0]);
+  const currChan = chanName;
   $.ajax('/~tomanfi2/api/message.php', {
     method: 'POST',
     data: {
       sid: sub,
       chan: chanName,
       img: false,
-      content: cont,
-      last: lastId
+      content: cont
     },
-    beforeSend(xhr) {
-      XHRPool.push(xhr);
-    },
-    success(res) {
-      const newMsg = JSON.parse(res);
-      lastId = newMsg[newMsg.length - 1].id;
-      insertMessages(newMsg, false, true);
-      $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
-      if (XHRPool.length === 1) {
-        resetUpdateLoop();
-      }
-    },
-    error(_, status) {
-      if (status !== 'abort') {
-        location.reload();
-      }
-    },
-    complete(xhr) {
-      const index = XHRPool.indexOf(xhr);
-      if (index !== -1) {
-        XHRPool.splice(index, 1);
+    complete() {
+      if (chanName === currChan) {
+        startUpdateLoop(true);
       }
     }
   });
@@ -387,12 +377,12 @@ function imgTemplate(msg, scroll) {
 }
 
 // Fetches a block of messages from the current chanel
-function fetchMessages(scroll) {
+function fetchMessages() {
   if (!lastMsg) {
     $.ajax(`/~tomanfi2/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
       method: 'GET',
       beforeSend(xhr) {
-        XHRPool.push(xhr);
+        MessagePool.push(xhr);
       },
       success(res) {
         const msgArr = JSON.parse(res);
@@ -400,17 +390,10 @@ function fetchMessages(scroll) {
           lastMsg = true;
         }
         let origSize = $('#content')[0].scrollHeight;
-        insertMessages(msgArr, true, scroll);
-        if (!scroll) {
-          let offset = $('#content')[0].scrollHeight - origSize;
-          $('#content').scrollTop(offset);
-        } else {
-          $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
-          scrollDeac = false;
-          if (msgArr[0] !== undefined) {
-            lastId = msgArr[0].id;
-          }
-        }
+        insertMessages(msgArr, true, false);
+        let offset = $('#content')[0].scrollHeight - origSize;
+        $('#content').scrollTop(offset);
+        scrollDeac = false;
       },
       error(_, status) {
         if (status !== 'abort') {
@@ -418,13 +401,49 @@ function fetchMessages(scroll) {
         }
       },
       complete(xhr) {
-        const index = XHRPool.indexOf(xhr);
+        const index = MessagePool.indexOf(xhr);
         if (index !== -1) {
-          XHRPool.splice(index, 1);
+          MessagePool.splice(index, 1);
         }
       }
     });
   }
+}
+
+function initChannel() {
+  clearInterval(updateLoop);
+  abortRequests();
+  abortMessage();
+  $.ajax(`/~tomanfi2/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
+    method: 'GET',
+    beforeSend(xhr) {
+      MessagePool.push(xhr);
+    },
+    success(res) {
+      const msgArr = JSON.parse(res);
+      if (msgArr.length < MESSAGE_LIMIT) {
+        lastMsg = true;
+      }
+      insertMessages(msgArr, true, true);
+      $("#content").scrollTop($("#content")[0].scrollHeight);
+      scrollDeac = false;
+      if (msgArr.length > 0) {
+        lastId = msgArr[0].id;
+      }
+      startUpdateLoop();
+    },
+    error(_, status) {
+      if (status !== 'abort') {
+        location.reload();
+      }
+    },
+    complete(xhr) {
+      const index = MessagePool.indexOf(xhr);
+      if (index !== -1) {
+        MessagePool.splice(index, 1);
+      }
+    }
+  });
 }
 
 // Scrolls to the bottom of the chat window (triggered when image is loaded)
@@ -432,12 +451,20 @@ function scrollDown() {
   $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
 }
 
-// Aborts all pending requests
+// Aborts all pending Update requests
 function abortRequests() {
-  XHRPool.forEach((req) => {
+  UpdatePool.forEach((req) => {
     req.abort();
   });
-  XHRPool = [];
+  UpdatePool = [];
+}
+
+// Aborts all pending Message requests
+function abortMessage() {
+  MessagePool.forEach((req) => {
+    req.abort();
+  });
+  MessagePool = [];
 }
 
 // Stop the Update loop when logging out

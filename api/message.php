@@ -1,6 +1,5 @@
 <?php
 require_once '../lib/upload.php';
-require_once '../lib/latest.php';
 session_start();
 
 // Checks for API access permission
@@ -77,10 +76,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
       }
     }
     break;
-  case 'POST':
 
+  case 'POST':
     // Checks request validity
-    if (isset($_POST['sid']) && isset($_POST['chan']) && isset($_POST['img']) && isset($_POST['content']) && isset($_POST['last']) && ctype_digit($_POST['last'])) {
+    if (isset($_POST['sid']) && isset($_POST['chan']) && isset($_POST['img']) && isset($_POST['content'])) {
 
       // Checks Subchat ID validity
       $query = $conn->prepare("SELECT COUNT(*) FROM subs WHERE id = :sid");
@@ -131,12 +130,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         'cont' => $content
       ));
 
-      if ($imgBool) {
-        die();
-      }
-
-      // Fetches latest messages and sends them to the client
-      getLatest($conn, $_POST['sid'], $_POST['chan'], $_POST['last']);
+      die();
     }
 }
 

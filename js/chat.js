@@ -218,6 +218,13 @@ $('#content').on('scroll', function() {
   }
 });
 
+// Removing a channel
+$('.chan-remove').click((e) => {
+  e.stopPropagation();
+  alert('WORK IN PROGRESS');
+  // TODO
+});
+
 // Submit message to the API endpoint
 function sendMessage() {
   clearInterval(updateLoop);

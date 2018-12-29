@@ -213,11 +213,40 @@ main {
     transition-duration: 0.1s;
     overflow: hidden;
     text-overflow: ellipsis;
+    position: relative;
     &:hover {
       color: white;
       background: rgb(46, 46, 50);
       transition-duration: 0.1s;
+      .chan-remove {
+        transition-duration: 0.2s;
+        transform: none;
+      }
     }
+  }
+}
+
+.chan-remove {
+  height: 100%;
+  width: 32px;
+  background: rgb(255, 56, 56);
+  border-left: 1px solid rgb(22, 22, 22);
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateX(36px);
+  transition-duration: 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  svg {
+    fill: white;
+    width: 25px;
+    height: auto;
+  }
+  &:hover {
+    background: rgb(207, 39, 39);
+    transition-duration: 0.1s;
   }
 }
 

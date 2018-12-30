@@ -509,6 +509,11 @@ function removeChannel() {
 
 // Removing subchat
 function removeSubchat() {
-  alert('REMOVED SUBCHAT');
-  // TODO: AJAX
+  $.ajax('/~tomanfi2/api/subchat.php', {
+    method: 'DELETE',
+    data: { sub },
+    complete() {
+      location.href = '/~tomanfi2';
+    }
+  });
 }

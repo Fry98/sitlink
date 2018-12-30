@@ -23,7 +23,7 @@ reader.onload = () => {
 };
 
 $('.cancel').click(() => {
-  location.href = './';
+  location.href = '/~tomanfi2';
 });
 
 // Form submission and validation

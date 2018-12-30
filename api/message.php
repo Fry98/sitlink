@@ -101,7 +101,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
       $res = $query->fetch();
       if ($res[0] === 0) {
         http_response_code(400);
-        die('Invalid channel name');
+        die('Invalid Channel Name');
       }
 
       // Uploads image via Imgur API and prepares message text

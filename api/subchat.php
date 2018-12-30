@@ -1,5 +1,4 @@
 <?php
-require_once '../lib/upload.php';
 session_start();
 
 // Checks for API access permission

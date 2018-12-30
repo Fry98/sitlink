@@ -57,6 +57,9 @@ function startUpdateLoop(immediate) {
 
 // Channel switching
 $('#chans li').click(function() {
+  if (this.id === 'chan-add') {
+    return;
+  }
   let newIndex = $('#chans li').index(this);
   if (newIndex !== currChan) {
     if ($('#chans li')[currChan]) {
@@ -82,6 +85,15 @@ $('#msg-box textarea').focus(() => {
 
 $('#msg-box textarea').blur(() => {
   $('#msg-box').css('border-color', '');
+});
+
+// Custom outline for Suchat URL
+$('#new-sub-url').focus(() => {
+  $('#new-sub-url-wrap').css('border-color', 'rgb(28, 126, 192)');
+});
+
+$('#new-sub-url').blur(() => {
+  $('#new-sub-url-wrap').css('border-color', '');
 });
 
 // Image pop-up
@@ -170,21 +182,21 @@ $('#subs').click(() => {
     success(res) {
       flwList = JSON.parse(res);
       updateFollows();
-      $('#flw-overlay').toggleClass('flw-hide');
+      $('#flw-overlay').toggleClass('overlay-hide');
       $('#sidebar').removeClass('open');
     }
   });
 });
 
 $('#flw-list-close').click(() => {
-  $('#flw-overlay').toggleClass('flw-hide');
+  $('#flw-overlay').toggleClass('overlay-hide');
 });
 
 $('#flw-overlay').click(function(e) {
   if (e.target !== this) {
     return;
   }
-  $('#flw-overlay').toggleClass('flw-hide');
+  $('#flw-overlay').toggleClass('overlay-hide');
 });
 
 // Switching tabs in the Subchat Menu
@@ -228,27 +240,47 @@ $('.chan-remove').click(function(e) {
   chanIndex = $('.chan-remove').index(this);
   confirmCallback = removeChannel;
   $('#confirm-prompt').html(`Do you really want to delete channel <span>#${chans[chanIndex]}</span>?`);
-  $('#confirm-overlay').removeClass('confirm-hide');
+  $('#confirm-overlay').removeClass('overlay-hide');
 });
 
 // Confirm box controls
 $('#cancel').click(() => {
-  $('#confirm-overlay').addClass('confirm-hide');
+  $('#confirm-overlay').addClass('overlay-hide');
 });
 
 $('#confirm').click(() => {
-  $('#confirm-overlay').addClass('confirm-hide');
+  $('#confirm-overlay').addClass('overlay-hide');
   confirmCallback();
 });
 
 // Adding new Subchat
 $('body').on('click', '#flw-add', () => {
-  $('#new-sub-overlay').removeClass('new-sub-hide');
+  $('#new-sub-overlay').removeClass('overlay-hide');
 });
 
 $('#new-sub-cancel').click(() => {
-  $('#new-sub-overlay').addClass('new-sub-hide');
+  $('#new-sub-overlay').addClass('overlay-hide');
   $('#new-sub-box input').val('');
+});
+
+$('#new-sub-add').click(() => {
+  // TODO
+  alert('ADDING NEW SUBCHAT');
+});
+
+// Adding new channel
+$('#chan-add').click(() => {
+  $('#new-chan-overlay').removeClass('overlay-hide');
+});
+
+$('#new-chan-cancel').click(() => {
+  $('#new-chan-overlay').addClass('overlay-hide');
+  $('#new-chan-url').val('');
+});
+
+$('#new-chan-add').click(() => {
+  // TODO
+  alert('ADDING NEW CHANNEL');
 });
 
 // Stop the Update loop when logging out
@@ -331,7 +363,7 @@ function followHandler() {
   if (admin) {
     confirmCallback = removeSubchat;
     $('#confirm-prompt').html('Do you really want to delete this subchat?');
-    $('#confirm-overlay').removeClass('confirm-hide');
+    $('#confirm-overlay').removeClass('overlay-hide');
     return;
   }
 

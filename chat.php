@@ -91,7 +91,7 @@
   <div id='popup' class='popup-hide'>
     <img alt='User Image'>
   </div>
-  <div id='flw-overlay' class='flw-hide'>
+  <div id='flw-overlay' class='overlay-hide'>
     <div id='flw-list'>
       <div id='flw-list-head'>
         <div id='flw-button1' class='flw-list-option flw-option-active'>Followed</div>
@@ -106,7 +106,7 @@
       </div>
     </div>
   </div>
-  <div id='confirm-overlay' class='confirm-hide'>
+  <div id='confirm-overlay' class='overlay-hide'>
     <div id='confirm-box'>
       <div id='confirm-prompt'></div>
       <div id='confirm-buttons'>
@@ -115,7 +115,7 @@
       </div>
     </div>
   </div>
-  <div id='new-sub-overlay' class='new-sub-hide'>
+  <div id='new-sub-overlay' class='overlay-hide'>
     <div id='new-sub-box'>
       <h1>Create New Subchat</h1>
       <form>
@@ -134,6 +134,24 @@
       <div id='new-sub-buttons'>
         <button id='new-sub-cancel'>Cancel</button>
         <button id='new-sub-add'>Confirm</button>
+      </div>
+    </div>
+  </div>
+  <div id='new-chan-overlay' class='overlay-hide'>
+    <div id='new-chan-box'>
+      <h1>Create New Channel</h1>
+      <form>
+        <div class='inp-box'>
+          <label for="new-chan-url">SUBCHAT URL</label>
+          <div id='new-chan-url-wrap'>
+            <div>#</div>
+            <input id='new-chan-url' type="text" class='inp-fld' name='new-chan-url' required>
+          </div>
+        </div>
+      </form>
+      <div id='new-chan-buttons'>
+        <button id='new-chan-cancel'>Cancel</button>
+        <button id='new-chan-add'>Confirm</button>
       </div>
     </div>
   </div>
@@ -159,6 +177,9 @@
             </div>
             <?php } ?>
           </li>
+        <?php } ?>
+        <?php if ($admin) { ?>
+          <li id='chan-add'>+ Add Channel</li>
         <?php } ?>
       </ul>
       <div id='ctrls'>

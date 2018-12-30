@@ -11,6 +11,8 @@ let scrollDeac = true;
 let updateLoop;
 let UpdatePool = null;
 let MessagePool = null;
+let confirmCallback = null;
+let removedChannelElement = null;
 const MESSAGE_LIMIT = 30;
 
 // Inital page setup
@@ -57,9 +59,10 @@ function startUpdateLoop(immediate) {
 $('#chans li').click(function() {
   let newIndex = $('#chans li').index(this);
   if (newIndex !== currChan) {
-    $('#chans li')[currChan].classList.remove('selected');
+    if ($('#chans li')[currChan]) {
+      $('#chans li')[currChan].classList.remove('selected');
+    }
     $(this).addClass('selected');
-    $('#sidebar').removeClass('open');
     currChan = newIndex;
     chanName = chans[currChan];
     scrollDeac = true;
@@ -155,8 +158,6 @@ reader.onload = () => {
     complete() {
       if (chanName === currChan) {
         startUpdateLoop(true);
-      } else {
-        console.log('not gonna happen');
       }
     }
   });
@@ -212,17 +213,37 @@ $('#flw').click(followHandler);
 // Fetch previous messages
 $('#content').on('scroll', function() {
   if ($(this).scrollTop() <= 0 && !scrollDeac) {
-    console.log('trigger');
     scrollDeac = true;
     fetchMessages();
   }
 });
 
 // Removing a channel
-$('.chan-remove').click((e) => {
+$('.chan-remove').click(function(e) {
   e.stopPropagation();
-  alert('WORK IN PROGRESS');
-  // TODO
+  if (chans.length < 2) {
+    alert('Subchat has to have at least one channel.');
+    return;
+  }
+  removedChannelElement = this;
+  confirmCallback = removeChannel;
+  $('#confirm-prompt').html('Do you really want to delete this channel?');
+  $('#confirm-overlay').removeClass('confirm-hide');
+});
+
+// Confirm box controls
+$('#cancel').click(() => {
+  $('#confirm-overlay').addClass('confirm-hide');
+});
+
+$('#confirm').click(() => {
+  $('#confirm-overlay').addClass('confirm-hide');
+  confirmCallback();
+});
+
+// Stop the Update loop when logging out
+$('#lo-wrap').click(() => {
+  clearInterval(updateLoop);
 });
 
 // Submit message to the API endpoint
@@ -298,8 +319,9 @@ function updateFollowToggle() {
 // Handles clicking the Follow button
 function followHandler() {
   if (admin) {
-    // TODO: Makes this work lol
-    alert('WORK IN PROGRESS');
+    confirmCallback = removeSubchat;
+    $('#confirm-prompt').html('Do you really want to delete this subchat?');
+    $('#confirm-overlay').removeClass('confirm-hide');
     return;
   }
 
@@ -404,7 +426,7 @@ function fetchMessages() {
           location.reload();
         }
       },
-      complete(xhr) {
+      complete() {
         MessagePool = null;
       }
     });
@@ -438,7 +460,7 @@ function initChannel() {
         location.reload();
       }
     },
-    complete(xhr) {
+    complete() {
       MessagePool = null;
     }
   });
@@ -465,7 +487,28 @@ function abortMessage() {
   }
 }
 
-// Stop the Update loop when logging out
-$('#lo-wrap').click(() => {
-  clearInterval(updateLoop);
-});
+// Removing channel
+function removeChannel() {
+  const clicked = $('.chan-remove').index(removedChannelElement);
+  $('#chans li')[clicked].remove();
+  chans.splice(clicked, 1);
+  let newSelect = null;
+  chans.forEach((chan, i) => {
+    if (chan === chanName) {
+      newSelect = i;
+    }
+  });
+  if (newSelect !== null) {
+    currChan = newSelect;
+  } else {
+    currChan = null;
+    $('#chans li')[0].click();
+  }
+  // TODO: AJAX
+}
+
+// Removing subchat
+function removeSubchat() {
+  alert('REMOVED SUBCHAT');
+  // TODO: AJAX
+}

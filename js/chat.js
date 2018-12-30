@@ -12,7 +12,7 @@ let updateLoop;
 let UpdatePool = null;
 let MessagePool = null;
 let confirmCallback = null;
-let removedChannelElement = null;
+let chanIndex = null;
 const MESSAGE_LIMIT = 30;
 
 // Inital page setup
@@ -224,10 +224,10 @@ $('.chan-remove').click(function(e) {
   if (chans.length < 2) {
     alert('Subchat has to have at least one channel.');
     return;
-  }
-  removedChannelElement = this;
+  }  
+  chanIndex = $('.chan-remove').index(this);
   confirmCallback = removeChannel;
-  $('#confirm-prompt').html('Do you really want to delete this channel?');
+  $('#confirm-prompt').html(`Do you really want to delete channel <span>#${chans[chanIndex]}</span>?`);
   $('#confirm-overlay').removeClass('confirm-hide');
 });
 
@@ -239,6 +239,16 @@ $('#cancel').click(() => {
 $('#confirm').click(() => {
   $('#confirm-overlay').addClass('confirm-hide');
   confirmCallback();
+});
+
+// Adding new Subchat
+$('body').on('click', '#flw-add', () => {
+  $('#new-sub-overlay').removeClass('new-sub-hide');
+});
+
+$('#new-sub-cancel').click(() => {
+  $('#new-sub-overlay').addClass('new-sub-hide');
+  $('#new-sub-box input').val('');
 });
 
 // Stop the Update loop when logging out
@@ -349,6 +359,13 @@ function updateFollows() {
                                     <h1>${item.title}</h1>
                                     <div class='flw-item-desc'>${item.desc}</div>
                                   </div></a>`);
+  }
+  if (flwTab) {
+    $('#flw-list-content').append(`<div id='flw-add-wrap'>
+                                    <div id='flw-add'>
+                                      + Create New Subchat
+                                    </div>
+                                  </div>`);
   }
 }
 
@@ -489,9 +506,8 @@ function abortMessage() {
 
 // Removing channel
 function removeChannel() {
-  const clicked = $('.chan-remove').index(removedChannelElement);
-  $('#chans li')[clicked].remove();
-  chans.splice(clicked, 1);
+  $('#chans li')[chanIndex].remove();
+  chans.splice(chanIndex, 1);
   let newSelect = null;
   chans.forEach((chan, i) => {
     if (chan === chanName) {

@@ -44,7 +44,6 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  // border-top: 1px solid #101011;
 }
 
 #btn-wrap {
@@ -270,6 +269,7 @@ main {
     max-height: 90%;
     box-shadow: 0px 2px 5px rgb(0, 0, 0);
     transition: 0.2s ease-in-out;
+    cursor: pointer;
   }
 }
 
@@ -535,6 +535,29 @@ main {
   }
 }
 
+#flw-add-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#flw-add {
+  width: 280px;
+  // box-sizing: border-box;
+  margin-top: 0.3em;
+  background: #47474b;
+  border: 1px solid rgb(22, 22, 22);
+  border-radius: 7px;
+  font-size: 1.3em;
+  text-align: center;
+  padding: 3px 0px;
+  color: rgb(225, 225, 225);
+  &:hover {
+    background: #56565a;
+    color: white;
+  }
+}
+
 #confirm-overlay {
   transition-duration: 0.2s;
   background: rgba(0, 0, 0, 0.548);
@@ -564,6 +587,9 @@ main {
 #confirm-prompt {
   font-weight: 500;
   font-size: 1.5em;
+  span {
+    color: rgb(255, 56, 56);
+  }
 }
 
 #confirm-buttons {
@@ -602,6 +628,126 @@ main {
   #confirm-box {
     transform-origin: center center;
     transform: scale(.9);
+  }
+}
+
+#new-sub-overlay {
+  transition-duration: 0.2s;
+  background: rgba(0, 0, 0, 0.548);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#new-sub-box {
+  border: 1px solid rgb(22, 22, 22);
+  border-radius: 7px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.507);
+  background: #36393f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 15px;
+  max-width: 85%;
+  h1 {
+    margin: 0;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  form {
+    width: 100%;
+  }
+}
+
+.inp-box {
+  margin-bottom: 15px;
+  label {
+    font-weight: 600;
+		display: block;
+		margin-bottom: 4px;
+		font-size: 0.8em;
+		margin-left: 4px;
+		color: rgb(233, 233, 233);
+  }
+}
+
+#new-sub-name {
+	box-sizing: border-box;
+	padding: 7px 7px;
+  width: 100%;
+	background: rgb(35, 35, 40);
+	border: 1px solid rgb(22, 22, 22);
+	border-radius: 5px;
+	color: white;
+	&:focus {
+		outline: none;
+		border-color: rgb(28, 126, 192);
+	}
+}
+
+#new-sub-url-wrap {
+  width: 100%;
+  font-size: 1em;
+  display: flex;
+  align-items: baseline;
+  padding: 7px 7px;
+  box-sizing: border-box;
+  font-size: 0.833em;
+  background: rgb(35, 35, 40);
+	border: 1px solid rgb(22, 22, 22);
+	border-radius: 5px;
+  input {
+    padding: 0;
+    padding-left: 1px;
+    flex: 1;
+    background: none;
+    border: none;
+    color: white;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+#new-sub-buttons {
+  button {
+    background: rgb(142, 145, 150);
+    border: 1px solid rgb(22, 22, 22);
+    color: white;
+    border-radius: 60px;
+    font-size: 1.2em;
+    padding: 5px 20px;
+    cursor: pointer;
+    transition-duration: 0.1s;
+    &:hover {
+      background: #6a6a6e;
+      transition-duration: 0.1s;
+    }
+  }
+}
+
+#new-sub-add {
+  margin-left: 3px;
+  background: rgb(28, 126, 192) !important;
+  &:hover {
+    background: rgb(20, 110, 170) !important;
+    transition-duration: 0.1s;
+  }
+}
+
+.new-sub-hide {
+  pointer-events: none;
+  opacity: 0;
+  #new-sub-box {
+    transform-origin: center center;
+    transform: scale(.9);
+    transition-duration: 0.2s;
   }
 }
 

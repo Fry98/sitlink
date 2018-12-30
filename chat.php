@@ -89,7 +89,7 @@
 <body>
   <input type="file" name="img-sel" id='img-sel' accept="image/*">
   <div id='popup' class='popup-hide'>
-    <img src="/~tomanfi2/assets/nms.jpg" alt='User Image'>
+    <img alt='User Image'>
   </div>
   <div id='flw-overlay' class='flw-hide'>
     <div id='flw-list'>
@@ -112,6 +112,28 @@
       <div id='confirm-buttons'>
         <button id='cancel'>Cancel</button>
         <button id='confirm'>Delete</button>
+      </div>
+    </div>
+  </div>
+  <div id='new-sub-overlay' class='new-sub-hide'>
+    <div id='new-sub-box'>
+      <h1>Create New Subchat</h1>
+      <form>
+        <div class='inp-box'>
+          <label for="new-sub-name">SUBCHAT NAME</label>
+          <input id='new-sub-name' type="text" class='inp-fld' name='new-sub-name' required>
+        </div>
+        <div class='inp-box'>
+          <label for="new-sub-url">SUBCHAT URL</label>
+          <div id='new-sub-url-wrap'>
+            <div>c/</div>
+            <input id='new-sub-url' type="text" class='inp-fld' name='new-sub-url' required>
+          </div>
+        </div>
+      </form>
+      <div id='new-sub-buttons'>
+        <button id='new-sub-cancel'>Cancel</button>
+        <button id='new-sub-add'>Confirm</button>
       </div>
     </div>
   </div>

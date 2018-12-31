@@ -236,7 +236,7 @@ $('#content').on('scroll', function() {
 $('.chan-remove').click(function(e) {
   e.stopPropagation();
   if (chans.length < 2) {
-    alert('Subchat has to have at least one channel!');
+    alert('Subchat has to contain at least one channel!');
     return;
   }  
   chanIndex = $('.chan-remove').index(this);

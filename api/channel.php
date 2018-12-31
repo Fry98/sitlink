@@ -28,14 +28,50 @@ die('Invalid API Request');
 
 
 // Handling POST requests
-function subchatPost($conn) {
+function channelPost($conn) {
 
-  // Checking request validity
-  // TODO
+  // Checks request validity
+  if (isset($_POST['sub']) && isset($_POST['chan']) && strlen($_POST['chan']) >= 3 && strlen($_POST['chan']) <= 20 && preg_match('/^[a-z0-9\-_]*$/', $_POST['chan'])) {
+
+    // Checks Subchat ID validity
+    $query = $conn->prepare('SELECT admin FROM subs WHERE id = :sub');
+    $query->execute([
+      'sub' => $_POST['sub']
+    ]);
+    $res = $query->fetch();
+    if ($res === false) {
+      http_response_code(404);
+      die("Subchat doesn't exist!");
+    } else if ($res[0] !== $_SESSION['id']) {
+      http_response_code(403);
+      die("Channel Insertion Forbidden");
+    }
+
+    // Checks channel name validity
+    $query = $conn->prepare('SELECT COUNT(*) FROM chans WHERE sub_id = :sub AND chan_name = :chan');
+    $query->execute([
+      'sub' => $_POST['sub'],
+      'chan' => $_POST['chan']
+    ]);
+    $res = $query->fetch();
+    if ($res[0] > 0) {
+      http_response_code(409);
+      die("Channel name is already used!");
+    }
+
+    // Inserts channel into the DB
+    $query = $conn->prepare('INSERT INTO chans (sub_id, chan_name) VALUES (:sub, :chan)');
+    $query->execute([
+      'sub' => $_POST['sub'],
+      'chan' => $_POST['chan']
+    ]);
+
+    die();
+  }
 }
 
 // Handling DELETE requests
-function subchatDelete($conn) {
+function channelDelete($conn) {
 
   // Inital setup
   $data = file_get_contents("php://input");
@@ -73,15 +109,15 @@ function subchatDelete($conn) {
     ]);
 
     // Removing the channel
-    $query = $conn->prepare('DELETE FROM messages WHERE sub_id = :sub AND chan_name = :chan');
+    $query = $conn->prepare('DELETE FROM chans WHERE sub_id = :sub AND chan_name = :chan');
     $query->execute([
       'sub' => $_DELETE['sub'],
       'chan' => $_DELETE['chan']
     ]);
     $rows = $query->rowCount();
     if ($rows === 0) {
-      http_response_code(400);
-      die('Invalid Channel Name');
+      http_response_code(404);
+      die("Channel doesn't exist!");
     }
     
     die();

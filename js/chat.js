@@ -58,7 +58,7 @@ function startUpdateLoop(immediate) {
 }
 
 // Channel switching
-$('#chans li').click(function() {
+$('body').on('click', '#chans li', function() {
   if (this.id === 'chan-add') {
     return;
   }
@@ -233,12 +233,12 @@ $('#content').on('scroll', function() {
 });
 
 // Removing a channel
-$('.chan-remove').click(function(e) {
+$('body').on('click', '.chan-remove', function(e) {
   e.stopPropagation();
   if (chans.length < 2) {
     alert('Subchat has to contain at least one channel!');
     return;
-  }  
+  }
   chanIndex = $('.chan-remove').index(this);
   confirmCallback = removeChannel;
   $('#confirm-prompt').html(`Do you really want to delete channel <span>#${chans[chanIndex]}</span>?`);
@@ -337,7 +337,27 @@ $('#new-chan-form').submit((e) => {
     alert('Channel name has to be at least 3 characters long!');
     return;
   }
-  // TODO
+  const newChan = $('#new-chan-url').val().toLowerCase();
+  $.ajax('/~tomanfi2/api/channel.php', {
+    method: 'POST',
+    data: {
+      sub,
+      chan: newChan
+    },
+    success() {
+      chans.push(newChan);
+      $('#chan-add').before(`<li>
+                              #${newChan}
+                              <div class='chan-remove'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zm2.46-7.12l1.41-1.41L12 12.59l2.12-2.12 1.41 1.41L13.41 14l2.12 2.12-1.41 1.41L12 15.41l-2.12 2.12-1.41-1.41L10.59 14l-2.13-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4z"/><path fill="none" d="M0 0h24v24H0z"/></svg>
+                              </div>
+                            </li>`);
+      $('#new-chan-overlay').addClass('overlay-hide');
+    },
+    error(res) {
+      alert(res.responseText);
+    }
+  });
 });
 
 // Stop the Update loop when logging out
@@ -444,6 +464,8 @@ function updateFollows() {
     subsToDraw = flwList.followed;
   }
   for (const item of subsToDraw) {
+
+    // TODO: Change from anchor to JS redirect (doesn't refresh subchat)
     $('#flw-list-content').append(`<a href='/~tomanfi2/c/${item.id}'><div class='flw-list-item'>
                                     <h1>${item.title}</h1>
                                     <div class='flw-item-desc'>${item.desc}</div>
@@ -595,21 +617,32 @@ function abortMessage() {
 
 // Removing channel
 function removeChannel() {
-  $('#chans li')[chanIndex].remove();
-  chans.splice(chanIndex, 1);
-  let newSelect = null;
-  chans.forEach((chan, i) => {
-    if (chan === chanName) {
-      newSelect = i;
+  $.ajax('/~tomanfi2/api/channel.php', {
+    method: 'DELETE',
+    data: {
+      sub,
+      chan: chans[chanIndex]
+    },
+    success() {
+      $('#chans li')[chanIndex].remove();
+      chans.splice(chanIndex, 1);
+      let newSelect = null;
+      chans.forEach((chan, i) => {
+        if (chan === chanName) {
+          newSelect = i;
+        }
+      });
+      if (newSelect !== null) {
+        currChan = newSelect;
+      } else {
+        currChan = null;
+        $('#chans li')[0].click();
+      }
+    },
+    error(res) {
+      alert(res.responseText);
     }
   });
-  if (newSelect !== null) {
-    currChan = newSelect;
-  } else {
-    currChan = null;
-    $('#chans li')[0].click();
-  }
-  // TODO: AJAX
 }
 
 // Removing subchat
@@ -617,8 +650,11 @@ function removeSubchat() {
   $.ajax('/~tomanfi2/api/subchat.php', {
     method: 'DELETE',
     data: { sub },
-    complete() {
+    success() {
       location.href = '/~tomanfi2';
+    },
+    error(res) {
+      alert(res.responseText);
     }
   });
 }

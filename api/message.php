@@ -30,8 +30,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
         ));
         $res = $query->fetch();
         if ($res[0] === 0) {
-          http_response_code(400);
-          die("Invalid Subchat ID");
+          http_response_code(404);
+          die("Subchat doesn't exist!");
         }
 
         // Checks channel validity
@@ -42,8 +42,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
         ));
         $res = $query->fetch();
         if ($res[0] === 0) {
-          http_response_code(400);
-          die('Invalid channel name');
+          http_response_code(404);
+          die("Channel doesn't exist!");
         }
         
         // Man,... fuck SQL...
@@ -88,8 +88,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
       ));
       $res = $query->fetch();
       if ($res[0] === 0) {
-        http_response_code(400);
-        die("Invalid Subchat ID");
+        http_response_code(404);
+        die("Subchat doesn't exist!");
       }
 
       // Checks channel validity
@@ -100,8 +100,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
       ));
       $res = $query->fetch();
       if ($res[0] === 0) {
-        http_response_code(400);
-        die('Invalid Channel Name');
+        http_response_code(404);
+        die("Channel doesn't exist!");
       }
 
       // Uploads image via Imgur API and prepares message text

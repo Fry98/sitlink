@@ -22,8 +22,8 @@ if (isset($_GET['sub']) && isset($_GET['chan']) && isset($_GET['last']) && ctype
   ));
   $res = $query->fetch();
   if ($res[0] === 0) {
-    http_response_code(400);
-    die("Invalid Subchat ID");
+    http_response_code(404);
+    die("Subchat doesn't exist!");
   }
 
   // Checks channel validity
@@ -34,8 +34,8 @@ if (isset($_GET['sub']) && isset($_GET['chan']) && isset($_GET['last']) && ctype
   ));
   $res = $query->fetch();
   if ($res[0] === 0) {
-    http_response_code(400);
-    die('Invalid channel name');
+    http_response_code(404);
+    die("Channel doesn't exist!");
   }
 
   // Fetches all the lastest messages from the DB

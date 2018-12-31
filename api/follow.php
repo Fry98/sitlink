@@ -33,36 +33,45 @@ switch ($_SERVER['REQUEST_METHOD']) {
     $res = $query->fetchAll();
     $json['followed'] = queryToArray($res);
     die(json_encode($json));
-  case 'POST':
-    // Checks whether the user is admin of a subchat
-    $query = $conn->prepare("SELECT admin FROM subs WHERE id = :id");
-    $query->execute(array(
-      "id" => $_POST['sub']
-    ));
-    $res = $query->fetch();
-    if ($res[0] === $_SESSION['id']) {
-      http_response_code(400);
-      die('Invalid API Request');
-    }
 
-    // Removes subchat from user's follows
-    $query = $conn->prepare("DELETE FROM follows WHERE user_id = :uid AND sub_id = :sub");
-    $query->execute(array(
-      "uid" => $_SESSION['id'],
-      "sub" => $_POST['sub']
-    ));
-    $rows = $query->rowCount();
-    if ($rows > 0) {
+  case 'POST':
+    // Checks request validity
+    if (isset($_POST['sub'])) {
+
+      // Checks whether the user is admin of a subchat
+      $query = $conn->prepare("SELECT admin FROM subs WHERE id = :id");
+      $query->execute(array(
+        "id" => $_POST['sub']
+      ));
+      $res = $query->fetch();
+      if ($res[0] === $_SESSION['id']) {
+        break;
+      }
+
+      // Removes subchat from user's follows
+      $query = $conn->prepare("DELETE FROM follows WHERE user_id = :uid AND sub_id = :sub");
+      $query->execute(array(
+        "uid" => $_SESSION['id'],
+        "sub" => $_POST['sub']
+      ));
+      $rows = $query->rowCount();
+      if ($rows > 0) {
+        die();
+      }
+
+      // Adds subchat into user's follows
+      $query = $conn->prepare("INSERT INTO follows (user_id, sub_id) VALUES (:user, :sub)");
+      $query->execute(array(
+        "user" => $_SESSION['id'],
+        "sub" => $_POST['sub']
+      ));
       die();
     }
-
-    // Adds subchat into user's follows
-    $query = $conn->prepare("INSERT INTO follows (user_id, sub_id) VALUES (:user, :sub)");
-    $query->execute(array(
-      "user" => $_SESSION['id'],
-      "sub" => $_POST['sub']
-    ));
 }
+
+// Error fallback
+http_response_code(400);
+die('Invalid API Request');
 
 function queryToArray($res) {
   $arr = [];

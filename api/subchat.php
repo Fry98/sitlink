@@ -33,8 +33,8 @@ function subchatPost($conn) {
   // Checking request validity
   if (isset($_POST['url']) && isset($_POST['title']) && isset($_POST['desc'])) {
     $url = $_POST['url'];
-    $title = $_POST['title'];
-    $desc = $_POST['desc'];
+    $title = htmlspecialchars($_POST['title']);
+    $desc = htmlspecialchars($_POST['desc']);
 
     if (strlen($url) < 3 || strlen($url) > 30 || strlen($title) < 3 || strlen($title) > 50 || strlen($desc) < 10 || strlen($desc) > 100 || !preg_match('/^[a-z0-9\-_]*$/', $url)) {
       return;
@@ -87,8 +87,8 @@ function subchatDelete($conn) {
     ]);
     $res = $query->fetch();
     if ($res === false) {
-      http_response_code(400);
-      die('Invalid Subchat ID');
+      http_response_code(404);
+      die("Subchat doesn't exist!");
     }
     if ($res[0] !== $_SESSION['id']) {
       http_response_code(403);

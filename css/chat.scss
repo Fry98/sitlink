@@ -675,7 +675,7 @@ main {
 	background: rgb(35, 35, 40);
 	border: 1px solid rgb(22, 22, 22);
 	border-radius: 5px;
-	color: white;
+  color: white;
 	&:focus {
 		outline: none;
 		border-color: rgb(28, 126, 192);
@@ -694,6 +694,7 @@ main {
 	border: 1px solid rgb(22, 22, 22);
 	border-radius: 5px;
   input {
+    text-transform: lowercase;
     padding: 0;
     padding-left: 1px;
     flex: 1;
@@ -785,6 +786,7 @@ main {
     background: none;
     border: none;
     color: white;
+    text-transform: lowercase;
     &:focus {
       outline: none;
     }

@@ -13,6 +13,8 @@ let UpdatePool = null;
 let MessagePool = null;
 let confirmCallback = null;
 let chanIndex = null;
+let subUrlInp = '';
+let chanNameInp = '';
 const MESSAGE_LIMIT = 30;
 
 // Inital page setup
@@ -234,7 +236,7 @@ $('#content').on('scroll', function() {
 $('.chan-remove').click(function(e) {
   e.stopPropagation();
   if (chans.length < 2) {
-    alert('Subchat has to have at least one channel.');
+    alert('Subchat has to have at least one channel');
     return;
   }  
   chanIndex = $('.chan-remove').index(this);
@@ -255,32 +257,64 @@ $('#confirm').click(() => {
 
 // Adding new Subchat
 $('body').on('click', '#flw-add', () => {
+  $('#new-sub-box input').val('');
+  subUrlInp = '';
   $('#new-sub-overlay').removeClass('overlay-hide');
 });
 
 $('#new-sub-cancel').click(() => {
   $('#new-sub-overlay').addClass('overlay-hide');
-  $('#new-sub-box input').val('');
 });
 
-$('#new-sub-add').click(() => {
+$('#new-sub-url').on('input', function() {
+  if (!this.value.match(/^[A-Za-z0-9\-_]*$/) || this.value.length > 30) {
+    this.value = subUrlInp;
+  } else {
+    subUrlInp = this.value;
+  }
+});
+
+$('#new-sub-form').submit((e) => {
+  e.preventDefault();
+  if ($('#new-sub-name').val().length > 50) {
+    alert('Subchat name has to be shorter than 50 charactes');
+    return;
+  } else if ($('#new-sub-name').val().length < 3) {
+    alert('Subchat name has to be at least 3 charactes long');
+    return;
+  } else if ($('#new-sub-url').val().length < 3) {
+    alert('Subchat URL has to be at least 3 charactes long');
+    return;
+  }
   // TODO
-  alert('ADDING NEW SUBCHAT');
 });
 
 // Adding new channel
 $('#chan-add').click(() => {
+  $('#new-chan-url').val('');
+  chanNameInp = '';
   $('#new-chan-overlay').removeClass('overlay-hide');
 });
 
 $('#new-chan-cancel').click(() => {
   $('#new-chan-overlay').addClass('overlay-hide');
-  $('#new-chan-url').val('');
 });
 
-$('#new-chan-add').click(() => {
+$('#new-chan-url').on('input', function() {
+  if (!this.value.match(/^[A-Za-z0-9\-_]*$/) || this.value.length > 20) {
+    this.value = chanNameInp;
+  } else {
+    chanNameInp = this.value;
+  }
+});
+
+$('#new-chan-form').submit((e) => {
+  e.preventDefault();
+  if ($('#new-chan-url').val().length < 3) {
+    alert('Channel name has to be at least 3 characters long');
+    return;
+  }
   // TODO
-  alert('ADDING NEW CHANNEL');
 });
 
 // Stop the Update loop when logging out
@@ -295,7 +329,7 @@ function sendMessage() {
   let cont = $('#msg').val();
   cont = cont.trim();
   if (cont.length === 0) {
-    alert("Message can't be empty!");
+    alert("Message can't be empty");
     return;
   }
   $('#msg').val('');

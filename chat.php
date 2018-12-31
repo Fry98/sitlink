@@ -118,7 +118,7 @@
   <div id='new-sub-overlay' class='overlay-hide'>
     <div id='new-sub-box'>
       <h1>Create New Subchat</h1>
-      <form>
+      <form id='new-sub-form'>
         <div class='inp-box'>
           <label for="new-sub-name">SUBCHAT NAME</label>
           <input id='new-sub-name' type="text" class='inp-fld' name='new-sub-name' required>
@@ -133,16 +133,16 @@
       </form>
       <div id='new-sub-buttons'>
         <button id='new-sub-cancel'>Cancel</button>
-        <button id='new-sub-add'>Confirm</button>
+        <button id='new-sub-add' form='new-sub-form' type='submit' value="Submit">Confirm</button>
       </div>
     </div>
   </div>
   <div id='new-chan-overlay' class='overlay-hide'>
     <div id='new-chan-box'>
       <h1>Create New Channel</h1>
-      <form>
+      <form id='new-chan-form'>
         <div class='inp-box'>
-          <label for="new-chan-url">SUBCHAT URL</label>
+          <label for="new-chan-url">CHANNEL NAME</label>
           <div id='new-chan-url-wrap'>
             <div>#</div>
             <input id='new-chan-url' type="text" class='inp-fld' name='new-chan-url' required>
@@ -151,7 +151,7 @@
       </form>
       <div id='new-chan-buttons'>
         <button id='new-chan-cancel'>Cancel</button>
-        <button id='new-chan-add'>Confirm</button>
+        <button id='new-chan-add' form='new-chan-form' type='submit' value="Submit">Confirm</button>
       </div>
     </div>
   </div>

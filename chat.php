@@ -130,6 +130,10 @@
             <input id='new-sub-url' type="text" class='inp-fld' name='new-sub-url' required>
           </div>
         </div>
+        <div class='inp-box'>
+          <label for="new-sub-desc">SUBCHAT DESCRIPTION</label>
+          <input id='new-sub-desc' type="text" class='inp-fld' name='new-sub-desc' required>
+        </div>
       </form>
       <div id='new-sub-buttons'>
         <button id='new-sub-cancel'>Cancel</button>

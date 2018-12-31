@@ -17,7 +17,7 @@ if (isset($_POST['nick']) && isset($_POST['mail']) && isset($_POST['pwd']) && $_
 		http_response_code(400);
 		die("Invalid password!");
 	}
-	if (!preg_match("/(.+)@(.+)\.(.+)/", $mail) || strlen($mail) > 30) {
+	if (!preg_match("/^(.+)@(.+)\.(.+)$/", $mail) || strlen($mail) > 30) {
 		http_response_code(400);
 		die("Invalid e-mail address!");
 	}
@@ -38,8 +38,8 @@ if (isset($_POST['nick']) && isset($_POST['mail']) && isset($_POST['pwd']) && $_
 	));
 	$res = $query->fetch();
 	if ($res[0] > 0) {
-		http_response_code(400);
-		die('Nickname is already taken!');	
+		http_response_code(409);
+		die('Nickname is already taken!');
 	}
 
 	// Uploads the submitted profile picture to Imgur

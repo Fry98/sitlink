@@ -147,11 +147,11 @@ $('#img-sel').change(function() {
   const imgFile = this.files[0];
   this.value = null;
   if(!imgFile.type.includes('image')){
-    alert('Selected file has to be an image');
+    alert('Selected file has to be an image!');
     return;
   }
   if(imgFile.size > 2097152){
-    alert('Image has to be smaller than 2MB');
+    alert('Image has to be smaller than 2MB!');
     return;
   }
   reader.readAsDataURL(imgFile);
@@ -236,7 +236,7 @@ $('#content').on('scroll', function() {
 $('.chan-remove').click(function(e) {
   e.stopPropagation();
   if (chans.length < 2) {
-    alert('Subchat has to have at least one channel');
+    alert('Subchat has to have at least one channel!');
     return;
   }  
   chanIndex = $('.chan-remove').index(this);
@@ -277,16 +277,39 @@ $('#new-sub-url').on('input', function() {
 $('#new-sub-form').submit((e) => {
   e.preventDefault();
   if ($('#new-sub-name').val().length > 50) {
-    alert('Subchat name has to be shorter than 50 charactes');
-    return;
-  } else if ($('#new-sub-name').val().length < 3) {
-    alert('Subchat name has to be at least 3 charactes long');
-    return;
-  } else if ($('#new-sub-url').val().length < 3) {
-    alert('Subchat URL has to be at least 3 charactes long');
+    alert('Subchat name can only be up to 50 characters long!');
     return;
   }
-  // TODO
+  if ($('#new-sub-name').val().length < 3) {
+    alert('Subchat name has to be at least 3 charactes long!');
+    return;
+  }
+  if ($('#new-sub-url').val().length < 3) {
+    alert('Subchat URL has to be at least 3 charactes long!');
+    return;
+  }
+  if ($('#new-sub-desc').val().length < 10) {
+    alert('Subchat description has to be at least 10 charactes long!');
+    return;
+  }
+  if ($('#new-sub-desc').val().length > 100) {
+    alert('Subchat description can only be up to 100 characters long!');
+    return;
+  }
+  $.ajax('/~tomanfi2/api/subchat.php', {
+    method: 'POST',
+    data: {
+      url: $('#new-sub-url').val().toLowerCase(),
+      title: $('#new-sub-name').val(),
+      desc: $('#new-sub-desc').val()
+    },
+    success() {
+      location.href = `/~tomanfi2/c/${$('#new-sub-url').val()}`;
+    },
+    error(res) {
+      alert(res.responseText);
+    }
+  });
 });
 
 // Adding new channel
@@ -311,7 +334,7 @@ $('#new-chan-url').on('input', function() {
 $('#new-chan-form').submit((e) => {
   e.preventDefault();
   if ($('#new-chan-url').val().length < 3) {
-    alert('Channel name has to be at least 3 characters long');
+    alert('Channel name has to be at least 3 characters long!');
     return;
   }
   // TODO
@@ -329,7 +352,7 @@ function sendMessage() {
   let cont = $('#msg').val();
   cont = cont.trim();
   if (cont.length === 0) {
-    alert("Message can't be empty");
+    alert("Message can't be empty!");
     return;
   }
   $('#msg').val('');

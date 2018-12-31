@@ -6,11 +6,11 @@ $("#img-sel").change(function() {
   const imgFile = this.files[0];
   this.value = null;
   if(!imgFile.type.includes('image')){
-    alert('Selected file has to be an image');
+    alert('Selected file has to be an image!');
     return;
   }
   if(imgFile.size > 2097152){
-    alert('Image has to be smaller than 2MB');
+    alert('Image has to be smaller than 2MB!');
     return;
   }
   reader.readAsDataURL(imgFile);

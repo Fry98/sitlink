@@ -29,7 +29,46 @@ die('Invalid API Request');
 
 // Handling POST requests
 function subchatPost($conn) {
-  // TODO
+
+  // Checking request validity
+  if (isset($_POST['url']) && isset($_POST['title']) && isset($_POST['desc'])) {
+    $url = $_POST['url'];
+    $title = $_POST['title'];
+    $desc = $_POST['desc'];
+
+    if (strlen($url) < 3 || strlen($url) > 30 || strlen($title) < 3 || strlen($title) > 50 || strlen($desc) < 10 || strlen($desc) > 100 || !preg_match('/^[a-z0-9\-_]*$/', $url)) {
+      return;
+    }
+
+    // Checks whether the URL is taken
+    $query = $conn->prepare('SELECT COUNT(*) FROM subs WHERE id = :url');
+    $query->execute([
+      'url' => $url
+    ]);
+    $res = $query->fetch();
+    if ($res[0] !== 0) {
+      http_response_code(409);
+      die('Subchat URL is already taken!');
+    }
+
+    // Inserts new Subchat into the DB
+    $query = $conn->prepare('INSERT INTO subs (id, title, description, admin) VALUES (:url, :title, :desc, :admin)');
+    $query->execute([
+      'url' => $url,
+      'title' => $title,
+      'desc' => $desc,
+      'admin' => $_SESSION['id']
+    ]);
+
+    // Inserts the default channel for new Subchat
+    $query = $conn->prepare('INSERT INTO chans (sub_id, chan_name) VALUES (:url, :chan)');
+    $query->execute([
+      'url' => $url,
+      'chan' => 'default'
+    ]);
+    
+    die();
+  }
 }
 
 // Handling DELETE requests
@@ -79,5 +118,7 @@ function subchatDelete($conn) {
     $query->execute([
       'sub' => $_DELETE['sub']
     ]);
+
+    die();
   }
 }

@@ -293,6 +293,7 @@ main {
   padding-top: 12px;
   border-top: 0.5px solid rgb(79, 83, 88);
   margin-top: 12px;
+  word-break: break-word;
 }
 
 .nametag {
@@ -872,5 +873,26 @@ main {
     font-size: 1.2em;
     width: auto;
     padding-right: 0.4em;
+  }
+}
+
+@media print {
+  #chat {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    color: black;
+  }
+  .msg-text {
+    color: rgb(17, 17, 17);
+  }
+  header {
+    display: none;    
+  }
+  #msg-box-wrap {
+    display: none;
   }
 }

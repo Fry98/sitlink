@@ -45,7 +45,7 @@ function startUpdateLoop(immediate) {
             location.reload();
           }
         },
-        complete(xhr) {
+        complete() {
           UpdatePool = null;
         }
       });
@@ -379,6 +379,17 @@ $('#new-chan-form').submit((e) => {
 // Stop the Update loop when logging out
 $('#lo-wrap').click(() => {
   clearInterval(updateLoop);
+});
+
+// Switching SITLINK color theme
+$('#theme').click(() => {
+  if (Cookies.get('light') === undefined) {
+    $('#sheet')[0].setAttribute("href", "/~tomanfi2/css/chat-light.min.css");
+    Cookies.set('light', true);
+  } else {
+    $('#sheet')[0].setAttribute("href", "/~tomanfi2/css/chat-dark.min.css");
+    Cookies.remove('light');
+  }
 });
 
 // Submit message to the API endpoint

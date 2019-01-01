@@ -585,6 +585,17 @@ main {
   transition-duration: 0.2s;
 }
 
+#theme {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 13px;
+  svg {
+    height: 32px;
+    fill: white;
+  }
+}
+
 #confirm-prompt {
   font-weight: 500;
   font-size: 1.5em;

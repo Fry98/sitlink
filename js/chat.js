@@ -177,6 +177,22 @@ reader.onload = () => {
   });
 };
 
+// Switching Subchats
+$('body').on('click', '.flw-list-item', function() {
+  let flwIndex = $('.flw-list-item').index(this);
+  let link;
+  if (flwTab) {
+    link = flwList.owned[flwIndex].id;
+  } else {
+    link = flwList.followed[flwIndex].id;
+  }
+  if (sub !== link) {
+    location.href = `/~tomanfi2/c/${link}`;
+  } else {
+    $('#flw-overlay').addClass('overlay-hide');
+  }
+});
+
 // Accessing the Subchat Menu
 $('#subs').click(() => {
   $.ajax('/~tomanfi2/api/follow.php', {
@@ -464,12 +480,10 @@ function updateFollows() {
     subsToDraw = flwList.followed;
   }
   for (const item of subsToDraw) {
-
-    // TODO: Change from anchor to JS redirect (doesn't refresh subchat)
-    $('#flw-list-content').append(`<a href='/~tomanfi2/c/${item.id}'><div class='flw-list-item'>
+    $('#flw-list-content').append(`<div class='flw-list-item'>
                                     <h1>${item.title}</h1>
                                     <div class='flw-item-desc'>${item.desc}</div>
-                                  </div></a>`);
+                                  </div>`);
   }
   if (flwTab) {
     $('#flw-list-content').append(`<div id='flw-add-wrap'>

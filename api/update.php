@@ -11,7 +11,7 @@ if (empty($_SESSION)) {
 if (isset($_GET['sub']) && isset($_GET['chan']) && isset($_GET['last']) && ctype_digit($_GET['last'])) {
   
   // Sets up the MySQL connection
-  $conn = new PDO('mysql:host=localhost;dbname=sitlink', getenv('MYSQL_USER'), getenv('MYSQL_PASSWD'));
+  $conn = new PDO('mysql:host=localhost;dbname=' . getenv('MYSQL_DB'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWD'));
   $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

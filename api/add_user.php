@@ -1,4 +1,5 @@
 <?php
+require_once '../lib/env.php';
 require_once '../lib/upload.php';
 
 // Checks whether the request contains all the required fields
@@ -27,7 +28,7 @@ if (isset($_POST['nick']) && isset($_POST['mail']) && isset($_POST['pwd']) && $_
 	}
 
 	// Sets up the MySQL connection
-	$conn = new PDO('mysql:host=localhost;dbname=' . getenv('MYSQL_DB'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWD'));
+	$conn = new PDO('mysql:host=localhost;dbname=' . $MYSQL_DB, $MYSQL_USER, $MYSQL_PASSWD);
 	$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

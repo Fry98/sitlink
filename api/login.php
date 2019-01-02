@@ -1,4 +1,5 @@
 <?php
+require_once '../lib/env.php';
 session_start();
 
 // Checks request validity
@@ -7,7 +8,7 @@ if (isset($_POST['nick']) && isset($_POST['pwd'])) {
 	$pwd = htmlspecialchars($_POST['pwd']);
 
 	// Connects to MySQL database
-	$conn = new PDO('mysql:host=localhost;dbname=' . getenv('MYSQL_DB'), getenv('MYSQL_USER'), getenv('MYSQL_PASSWD'));
+	$conn = new PDO('mysql:host=localhost;dbname=' . $MYSQL_DB, $MYSQL_USER, $MYSQL_PASSWD);
 	$conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

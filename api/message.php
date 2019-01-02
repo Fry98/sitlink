@@ -110,7 +110,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
       $content = $_POST['content'];
       $imgBool = false;
       if ($_POST['img'] === "true") {
-        $content = imgurUpload($content);
+        $content = imgurUpload($content, $IMGUR_TOKEN);
         $imgBool = true;
       } else {
         $content = trim($content);

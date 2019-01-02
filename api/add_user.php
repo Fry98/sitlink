@@ -44,7 +44,7 @@ if (isset($_POST['nick']) && isset($_POST['mail']) && isset($_POST['pwd']) && $_
 	}
 
 	// Uploads the submitted profile picture to Imgur
-	$imgId = imgurUpload($pic);
+	$imgId = imgurUpload($pic, $IMGUR_TOKEN);
 	if ($imgId === null) {
 		http_response_code(400);
 		die('Invalid image file!');

@@ -1,5 +1,5 @@
 <?php
-function imgurUpload($pic) {
+function imgurUpload($pic, $IMGUR_TOKEN) {
 	
 	// Checks file data type
 	if (substr($pic, 5, 5) !== 'image') {
@@ -11,7 +11,7 @@ function imgurUpload($pic) {
 	$endpoint = 'https://api.imgur.com/3/image';
 	$opts = [
 		CURLOPT_URL => $endpoint,
-		CURLOPT_HTTPHEADER => array("Authorization: Client-ID 50f7d3db60cd85e"),
+		CURLOPT_HTTPHEADER => array("Authorization: Client-ID " . $IMGUR_TOKEN),
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_POST => true,
 		CURLOPT_POSTFIELDS => $pic

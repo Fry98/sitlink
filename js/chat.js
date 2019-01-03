@@ -18,6 +18,7 @@ let chanNameInp = '';
 const MESSAGE_LIMIT = 30;
 
 // Inital page setup
+window.onresize();
 updateFollowToggle();
 initChannel();
 startUpdateLoop();
@@ -391,6 +392,12 @@ $('#theme').click(() => {
     Cookies.remove('light');
   }
 });
+
+// Setting the body size
+window.onresize = function() {
+  console.log(window.innerHeight);
+  document.body.style.cssText = `height: ${window.innerHeight}px`;
+};
 
 // Submit message to the API endpoint
 function sendMessage() {

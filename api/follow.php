@@ -9,7 +9,7 @@ if (empty($_SESSION)) {
 }
 
 // Sets up the MySQL connection
-$conn = new PDO('mysql:host=localhost;dbname=' . $MYSQL_DB, $MYSQL_USER, $MYSQL_PASSWD);
+$conn = new PDO('mysql:host=localhost;charset=utf8mb4;dbname=' . $MYSQL_DB, $MYSQL_USER, $MYSQL_PASSWD);
 $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

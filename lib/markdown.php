@@ -52,7 +52,7 @@ function escapeCleanup($str) {
 // Finds links and puts them into anchor tags
 function findLinks($str) {
   // Well... this regex doesn't always work properly but hey... good enough for me...
-  $regex = '/(?<=\b)https?:\/\/(www\.)?[a-z0-9\-_\.]{2,256}\.[a-z]{2,6}([a-z0-9\/#?&=\-_]+)?/i';
+  $regex = '/(?<=\b)https?:\/\/(www\.)?[a-z0-9\-_\.]{2,256}\.[a-z]{2,6}([a-z0-9\/#?&=\-_.~]+)?/i';
   $links;
   preg_match_all($regex, $str, $links, PREG_OFFSET_CAPTURE);
   $newStr = '';

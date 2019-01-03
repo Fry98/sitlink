@@ -18,7 +18,6 @@ let chanNameInp = '';
 const MESSAGE_LIMIT = 30;
 
 // Inital page setup
-window.onresize();
 updateFollowToggle();
 initChannel();
 startUpdateLoop();
@@ -395,7 +394,6 @@ $('#theme').click(() => {
 
 // Setting the body size
 window.onresize = function() {
-  console.log(window.innerHeight);
   document.body.style.cssText = `height: ${window.innerHeight}px`;
 };
 
@@ -609,6 +607,7 @@ function initChannel() {
       }
       insertMessages(msgArr, true, true);
       $("#content").scrollTop($("#content")[0].scrollHeight);
+      window.onresize();
       scrollDeac = false;
       if (msgArr.length > 0) {
         lastId = msgArr[0].id;

@@ -1,6 +1,6 @@
 <?php
 require_once '../lib/env.php';
-require_once '../lib/upload.php';
+require_once '../lib/uploadAlt.php';
 require_once '../lib/markdown.php';
 session_start();
 
@@ -108,10 +108,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
       // Uploads image via Imgur API and prepares message text
       $content = $_POST['content'];
-      $imgBool = false;
+      $imgBool = 0;
       if ($_POST['img'] === "true") {
         $content = imgurUpload($content, $IMGUR_TOKEN);
-        $imgBool = true;
+        $imgBool = 1;
       } else {
         $content = trim($content);
         if (strlen($content) === 0) {

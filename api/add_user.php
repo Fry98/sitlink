@@ -1,6 +1,6 @@
 <?php
 require_once '../lib/env.php';
-require_once '../lib/upload.php';
+require_once '../lib/uploadAlt.php';
 
 // Checks whether the request contains all the required fields
 if (isset($_POST['nick']) && isset($_POST['mail']) && isset($_POST['pwd']) && $_POST['pic']) {

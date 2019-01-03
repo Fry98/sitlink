@@ -68,6 +68,7 @@ $('body').on('click', '#chans li', function() {
       $('#chans li')[currChan].classList.remove('selected');
     }
     $(this).addClass('selected');
+    $('#sidebar').removeClass('open');
     currChan = newIndex;
     chanName = chans[currChan];
     scrollDeac = true;

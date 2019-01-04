@@ -36,7 +36,7 @@ function startUpdateLoop(immediate) {
           const msgArr = JSON.parse(res);
           if (msgArr.length > 0) {
             insertMessages(msgArr, false, true);
-            $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
+            $('#ctn-wrap')[0].scrollTop = $('#ctn-wrap')[0].scrollHeight;
             lastId = msgArr[msgArr.length - 1].id;
           }
         },
@@ -116,7 +116,7 @@ $('#burger').click(() => {
 
 // Multiline textarea handling
 $('#msg').on('input', function() {
-  const cont = $('#content')[0];
+  const cont = $('#ctn-wrap')[0];
   let rescroll = false;
   if (cont.scrollHeight - cont.scrollTop - cont.clientHeight < 1) {
     rescroll = true;
@@ -242,7 +242,7 @@ $('#flw-button2').click(function() {
 $('#flw').click(followHandler);
 
 // Fetch previous messages
-$('#content').on('scroll', function() {
+$('#ctn-wrap').on('scroll', function() {
   if ($(this).scrollTop() <= 0 && !scrollDeac) {
     scrollDeac = true;
     fetchMessages();
@@ -574,10 +574,10 @@ function fetchMessages() {
         if (msgArr.length < MESSAGE_LIMIT) {
           lastMsg = true;
         }
-        let origSize = $('#content')[0].scrollHeight;
+        let origSize = $('#ctn-wrap')[0].scrollHeight;
         insertMessages(msgArr, true, false);
-        let offset = $('#content')[0].scrollHeight - origSize;
-        $('#content').scrollTop(offset);
+        let offset = $('#ctn-wrap')[0].scrollHeight - origSize;
+        $('#ctn-wrap').scrollTop(offset);
         scrollDeac = false;
       },
       error(_, status) {
@@ -607,7 +607,7 @@ function initChannel() {
         lastMsg = true;
       }
       insertMessages(msgArr, true, true);
-      $("#content").scrollTop($("#content")[0].scrollHeight);
+      $("#ctn-wrap").scrollTop($("#ctn-wrap")[0].scrollHeight);
       window.onresize();
       scrollDeac = false;
       if (msgArr.length > 0) {
@@ -628,7 +628,7 @@ function initChannel() {
 
 // Scrolls to the bottom of the chat window (triggered when image is loaded)
 function scrollDown() {
-  $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
+  $('#ctn-wrap')[0].scrollTop = $('#ctn-wrap')[0].scrollHeight;
 }
 
 // Aborts all pending Update requests

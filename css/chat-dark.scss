@@ -119,6 +119,7 @@ main {
   height: 100%;
   overflow-y: scroll;
   -ms-overflow-style: none;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -163,6 +164,7 @@ main {
     max-height: 75px;
     overflow-x: hidden;
     -ms-overflow-style: none;
+    scrollbar-width: none;
     &:focus {
       outline: none;
     }
@@ -200,6 +202,7 @@ main {
   flex: 1;
   overflow-y: scroll;
   -ms-overflow-style: none;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -439,6 +442,7 @@ main {
   padding: 0px 10px;
   box-sizing: border-box;
   -ms-overflow-style: none;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }

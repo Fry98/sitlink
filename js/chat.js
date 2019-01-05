@@ -72,7 +72,7 @@ $('body').on('click', '#chans li', function() {
     currChan = newIndex;
     chanName = chans[currChan];
     scrollDeac = true;
-    $('#content').html('');
+    $('.msg').remove();
     skip = 0;
     lastMsg = false;
     lastId = 0;
@@ -516,13 +516,13 @@ function insertMessages(msgArr, prepend, scroll) {
   for (const msg of msgArr) {
     if (msg.img) {
       if (prepend) {
-        $('#content').prepend(imgTemplate(msg, scroll));
+        $('#loader').after(imgTemplate(msg, scroll));
       } else {
         $('#content').append(imgTemplate(msg, scroll));
       }
     } else {
       if (prepend) {
-        $('#content').prepend(textTemplate(msg));
+        $('#loader').after(textTemplate(msg));
       } else {
         $('#content').append(textTemplate(msg));
       }
@@ -573,10 +573,11 @@ function fetchMessages() {
         const msgArr = JSON.parse(res);
         if (msgArr.length < MESSAGE_LIMIT) {
           lastMsg = true;
+          $('#loader').css('display', 'none');
         }
         let origSize = $('#ctn-wrap')[0].scrollHeight;
         insertMessages(msgArr, true, false);
-        let offset = $('#ctn-wrap')[0].scrollHeight - origSize;
+        let offset = $('#ctn-wrap')[0].scrollHeight - origSize - 60;
         $('#ctn-wrap').scrollTop(offset);
         scrollDeac = false;
       },
@@ -596,6 +597,7 @@ function initChannel() {
   clearInterval(updateLoop);
   abortRequests();
   abortMessage();
+  $('#loader').css('display', 'flex');
   $.ajax(`/~tomanfi2/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
     method: 'GET',
     beforeSend(xhr) {
@@ -605,6 +607,7 @@ function initChannel() {
       const msgArr = JSON.parse(res);
       if (msgArr.length < MESSAGE_LIMIT) {
         lastMsg = true;
+        $('#loader').css('display', 'none');
       }
       insertMessages(msgArr, true, true);
       $("#ctn-wrap").scrollTop($("#ctn-wrap")[0].scrollHeight);

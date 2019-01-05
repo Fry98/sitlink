@@ -260,6 +260,16 @@ main {
   }
 }
 
+#loader {
+  display: flex;
+  justify-content: center;
+  margin-top: -10px;
+  margin-bottom: -22px;
+  svg {
+    height: 70px;
+  }
+}
+
 #popup {
   position: fixed;
   top: 0;

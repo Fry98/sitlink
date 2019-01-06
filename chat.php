@@ -82,8 +82,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="theme-color" content="#1c7ec0" />
-  <!-- TODO: MODIFY THIS FOR PROD -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
   <?php if (isset($_COOKIE['light'])) { ?>
     <link id='sheet' rel="stylesheet" href="/~tomanfi2/css/chat-light.min.css">
   <?php } else { ?>
@@ -95,10 +94,13 @@
   <title>SITLINK</title>
 </head>
 <body>
+  <!-- File Selector -->
   <input type="file" name="img-sel" id='img-sel' accept="image/*">
+  <!-- Image zoom popup -->
   <div id='popup' class='popup-hide'>
-    <img alt='User Image'>
+    <img src='about:blank' alt='User Image'>
   </div>
+  <!-- Followed Subchats overlay -->
   <div id='flw-overlay' class='overlay-hide'>
     <div id='flw-list'>
       <div id='flw-list-head'>
@@ -114,6 +116,7 @@
       </div>
     </div>
   </div>
+  <!-- Subchat and channel deletion confirmation popup -->
   <div id='confirm-overlay' class='overlay-hide'>
     <div id='confirm-box'>
       <div id='confirm-prompt'></div>
@@ -123,6 +126,7 @@
       </div>
     </div>
   </div>
+  <!-- Overlay for new Subchat creation -->
   <div id='new-sub-overlay' class='overlay-hide'>
     <div id='new-sub-box'>
       <h1>Create New Subchat</h1>
@@ -149,6 +153,7 @@
       </div>
     </div>
   </div>
+  <!-- Overlay for new channel creation -->
   <div id='new-chan-overlay' class='overlay-hide'>
     <div id='new-chan-box'>
       <h1>Create New Channel</h1>
@@ -167,7 +172,9 @@
       </div>
     </div>
   </div>
+  <!-- Navigation bar -->
   <header>
+    <!-- Burger button for opening sidebar on mobile -->
     <div id='burger'>
       <svg height="32px" id="Layer_1" style="enable-background:new 0 0 32 32;" version="1.1" viewBox="0 0 32 32" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M4,10h24c1.104,0,2-0.896,2-2s-0.896-2-2-2H4C2.896,6,2,6.896,2,8S2.896,10,4,10z M28,14H4c-1.104,0-2,0.896-2,2  s0.896,2,2,2h24c1.104,0,2-0.896,2-2S29.104,14,28,14z M28,22H4c-1.104,0-2,0.896-2,2s0.896,2,2,2h24c1.104,0,2-0.896,2-2  S29.104,22,28,22z"/></svg>
     </div>
@@ -175,6 +182,7 @@
     <div id='theme'>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 0H0v24h24z" fill="none"/><path d="M17.66 7.93L12 2.27 6.34 7.93c-3.12 3.12-3.12 8.19 0 11.31C7.9 20.8 9.95 21.58 12 21.58c2.05 0 4.1-.78 5.66-2.34 3.12-3.12 3.12-8.19 0-11.31zM12 19.59c-1.6 0-3.11-.62-4.24-1.76C6.62 16.69 6 15.19 6 13.59s.62-3.11 1.76-4.24L12 5.1v14.49z"/></svg>
     </div>
+    <!-- Logout button -->
     <a id='lo-wrap' href="/~tomanfi2/api/logout.php">
       <div id='logout'>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
@@ -182,7 +190,9 @@
     </a>
   </header>
   <main>
+    <!-- Sidebar -->
     <aside id='sidebar'>
+      <!-- Channel list and selector -->
       <ul id='chans'>
         <?php foreach ($res as $item) { ?>
           <li <?= firstItem() ?> >#<?= $item ?>
@@ -197,6 +207,7 @@
           <li id='chan-add'>+ Add Channel</li>
         <?php } ?>
       </ul>
+      <!-- Subchats and follow button -->
       <div id='ctrls'>
         <div id='btn-wrap'>
           <div id='subs'>Subchats</div>
@@ -209,14 +220,17 @@
         </div>
       </div>
     </aside>
+    <!-- Chatbox -->
     <div id='chat'>
       <div id='ctn-wrap'>
+        <!-- Message container -->
         <div id='content'>
           <div id='loader'>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background:none"><circle cx="16" cy="50" r="9.604" fill="#d8ebf9"><animate attributeName="r" values="0;10;10;10;0" keyTimes="0;0.25;0.5;0.75;1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" calcMode="spline" dur="1.6s" repeatCount="indefinite" begin="-0.8s"/><animate attributeName="cx" values="16;16;50;84;84" keyTimes="0;0.25;0.5;0.75;1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" calcMode="spline" dur="1.6s" repeatCount="indefinite" begin="-0.8s"/></circle><circle cx="84" cy="50" r=".396" fill="#5699d2"><animate attributeName="r" values="0;10;10;10;0" keyTimes="0;0.25;0.5;0.75;1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" calcMode="spline" dur="1.6s" repeatCount="indefinite" begin="-0.4s"/><animate attributeName="cx" values="16;16;50;84;84" keyTimes="0;0.25;0.5;0.75;1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" calcMode="spline" dur="1.6s" repeatCount="indefinite" begin="-0.4s"/></circle><circle cx="82.653" cy="50" r="10" fill="#1d3f72"><animate attributeName="r" values="0;10;10;10;0" keyTimes="0;0.25;0.5;0.75;1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" calcMode="spline" dur="1.6s" repeatCount="indefinite" begin="0s"/><animate attributeName="cx" values="16;16;50;84;84" keyTimes="0;0.25;0.5;0.75;1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" calcMode="spline" dur="1.6s" repeatCount="indefinite" begin="0s"/></circle><circle cx="48.653" cy="50" r="10" fill="#71c2cc"><animate attributeName="r" values="0;0;10;10;10" keyTimes="0;0.25;0.5;0.75;1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" calcMode="spline" dur="1.6s" repeatCount="indefinite" begin="0s"/><animate attributeName="cx" values="16;16;16;50;84" keyTimes="0;0.25;0.5;0.75;1" keySplines="0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1;0 0.5 0.5 1" calcMode="spline" dur="1.6s" repeatCount="indefinite" begin="0s"/></circle></svg>
           </div>
         </div>
       </div>
+      <!-- Textbox at the bottom -->
       <div id='msg-box-wrap'>
         <div id='msg-box'>
             <svg id='img' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
@@ -227,9 +241,8 @@
     </div>
   </main>
   <script>
+    // Variables injected from PHP into the front-end
     const sub = "<?= $_GET['sub'] ?>";
-
-    // ONII-CHAAAAAAN!!!!!
     let chans = JSON.parse(`<?= json_encode($res) ?>`);
     let admin = <?= boolPass($admin) ?>;
     let followed = <?= boolPass($followed) ?>;

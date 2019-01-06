@@ -14,20 +14,23 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="theme-color" content="#1c7ec0" />
 	<link rel="stylesheet" href="/~tomanfi2/css/login.min.css">
-	<!-- TODO: MODIFY THIS FOR PROD -->
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
 	<script src="/~tomanfi2/js/lib/particles.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="shortcut icon" type="image/png" href="/~tomanfi2/assets/favicon.png"/>
 	<title>SITLINK</title>
 </head>
 <body>
+	<!-- Logo for the desktop vesrion -->
 	<img id='logo' src="/~tomanfi2/assets/logo.png" alt='Website Logo'>
+	<!-- Login box -->
 	<div id='log-scr'>
 		<h2>Welcome back!</h2>
 		<h3>You are just one click away...</h3>
 		<form method='POST'>
+			<!-- Logo for the mobile version -->
 			<img src="/~tomanfi2/assets/logo.png" alt='Website Logo'>
+			<!-- Input fields -->
 			<div class='inp-box'>
 				<label for="nick">USERNAME</label>
 				<input id='nick' type="text" class='inp-fld' name='nick' required>
@@ -44,6 +47,7 @@
 			</div>
 		</form>
 	</div>
+	<!-- Background layer -->
   <div id="particles-js"></div>
 	<script src='/~tomanfi2/js/login.js'></script>
 </body>

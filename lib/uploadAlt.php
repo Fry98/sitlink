@@ -1,4 +1,6 @@
 <?php
+// Uploads image via Imgur API and returns its ID 
+// (Alternative version without cURL)
 function imgurUpload($pic, $IMGUR_TOKEN) {
 
 	// Checks file data type

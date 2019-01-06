@@ -1,4 +1,5 @@
 <?php
+// Not the most efficient lib in the history of human kind BUT... it does work... sometimes...
 
 // PHP implementation of String.prototype.substring() from JS
 function substring($str, $start, $end) {
@@ -51,7 +52,7 @@ function escapeCleanup($str) {
 
 // Finds links and puts them into anchor tags
 function findLinks($str) {
-  // Well... this regex doesn't always work properly but hey... good enough for me...
+  // Oh god,... I hate RegEx...
   $regex = '/(?<=\b)https?:\/\/(www\.)?[a-z0-9\-_\.]{2,256}\.[a-z]{2,6}([a-z0-9\/#?&=\-_.~]+)?/i';
   $links;
   preg_match_all($regex, $str, $links, PREG_OFFSET_CAPTURE);

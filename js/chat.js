@@ -561,7 +561,7 @@ function imgTemplate(msg, scroll) {
   }
 }
 
-// Fetches a block of messages from the current chanel
+// Fetches a block of messages from the current channel
 function fetchMessages() {
   if (!lastMsg) {
     $.ajax(`/~tomanfi2/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
@@ -593,6 +593,7 @@ function fetchMessages() {
   }
 }
 
+// Initializes new channel (I mean... the function name is pretty self-explanatory...)
 function initChannel() {
   clearInterval(updateLoop);
   abortRequests();

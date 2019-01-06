@@ -1,4 +1,6 @@
 <?php
+// Well, apparently Toad doesn't have the cURL module installed to this lib is now unsued
+// Keeping it just for the nostalgia tho
 function imgurUpload($pic, $IMGUR_TOKEN) {
 	
 	// Checks file data type

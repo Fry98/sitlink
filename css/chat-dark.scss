@@ -916,6 +916,9 @@ main {
 }
 
 @media print {
+  #sidebar {
+    display: none;
+  }
   #chat {
     position: fixed;
     top: 0;

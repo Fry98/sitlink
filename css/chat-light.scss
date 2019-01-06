@@ -28,6 +28,7 @@ main {
   z-index: 0;
   position: relative;
   min-height: 0;
+  overflow: hidden;
 }
 
 #sidebar {
@@ -931,6 +932,9 @@ main {
 }
 
 @media print {
+  #sidebar {
+    display: none;
+  }
   #chat {
     position: fixed;
     top: 0;

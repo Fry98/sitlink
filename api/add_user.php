@@ -4,8 +4,8 @@ require_once '../lib/uploadAlt.php';
 
 // Checks whether the request contains all the required fields
 if (isset($_POST['nick']) && isset($_POST['mail']) && isset($_POST['pwd']) && $_POST['pic']) {
-	$nick = htmlspecialchars($_POST['nick']);
-	$mail = htmlspecialchars($_POST['mail']);
+	$nick = trim(htmlspecialchars($_POST['nick']));
+	$mail = trim(htmlspecialchars($_POST['mail']));
 	$pwd = htmlspecialchars($_POST['pwd']);
 	$pic = htmlspecialchars($_POST['pic']);
 

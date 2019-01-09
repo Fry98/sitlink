@@ -27,6 +27,7 @@ if (isset($_POST['nick']) && isset($_POST['pwd'])) {
 	$_SESSION['id'] = $res['id'];
 	$_SESSION['nick'] = $res['nick'];
 	$_SESSION['img'] = $res['img'];
+	$_SESSION['app'] = 'sitlink';
 } else {
 	// Bad request handling
 	http_response_code(400);

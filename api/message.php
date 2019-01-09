@@ -2,13 +2,11 @@
 require_once '../lib/env.php';
 require_once '../lib/uploadAlt.php';
 require_once '../lib/markdown.php';
+require_once '../lib/authCheck.php';
 session_start();
 
 // Checks for API access permission
-if (empty($_SESSION)) {
-  http_response_code(403);
-  die('API Access Forbidden');
-}
+authCheck();
 
 // Sets up the MySQL connection
 $conn = new PDO('mysql:host=localhost;charset=utf8mb4;dbname=' . $MYSQL_DB, $MYSQL_USER, $MYSQL_PASSWD);

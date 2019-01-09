@@ -5,7 +5,13 @@
   session_start();
   if (empty($_SESSION)) {
 		header('Location: /~tomanfi2');
-		die();
+    die();
+  }
+
+  if (!isset($_SESSION['app']) || $_SESSION['app'] !== 'sitlink') {
+    session_destroy();
+    header('Location: /~tomanfi2');
+    die();
   }
   
   // Sets up the MySQL connection

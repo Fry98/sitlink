@@ -108,7 +108,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
       $content = $_POST['content'];
       $imgBool = 0;
       if ($_POST['img'] === "true") {
+        if (strlen($content) > 2097152) {
+          http_response_code(400);
+          die('Selected image file is too big!');
+        }
         $content = imgurUpload($content, $IMGUR_TOKEN);
+        if ($content === null) {
+          http_response_code(400);
+          die('Invalid image file!');
+        }
         $imgBool = 1;
       } else {
         $content = trim($content);

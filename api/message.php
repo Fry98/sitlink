@@ -108,10 +108,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
       $content = $_POST['content'];
       $imgBool = 0;
       if ($_POST['img'] === "true") {
-        if (strlen($content) > 2097152) {
-          http_response_code(400);
-          die('Selected image file is too big!');
-        }
         $content = imgurUpload($content, $IMGUR_TOKEN);
         if ($content === null) {
           http_response_code(400);
@@ -126,7 +122,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         $content = htmlspecialchars($content);
         $content = markdown($content);
+        if (preg_match('/^(<.+>)+(\s|\n)*(<\/.+>)+$/i', $content)) {
+          http_response_code(400);
+          die("Message can't be empty!");
+        }
         $content = str_replace("\n", '<br>', $content);
+        $content = str_replace(" ", '&nbsp;', $content);
       }
 
       // Adds message to the DB

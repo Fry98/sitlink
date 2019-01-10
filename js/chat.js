@@ -151,14 +151,14 @@ $('#img-sel').change(function() {
     alert('Selected file has to be an image!');
     return;
   }
-  if(imgFile.size > 2097152){
-    alert('Image has to be smaller than 2MB!');
-    return;
-  }
   reader.readAsDataURL(imgFile);
 });
 
 reader.onload = () => {
+  if (reader.result.length > 5242880) {
+    alert('Image size is too big!');
+    return;
+  }
   clearInterval(updateLoop);
   abortRequests();
   const currChan = chanName;
@@ -169,6 +169,9 @@ reader.onload = () => {
       chan: chanName,
       img: true,
       content: reader.result
+    },
+    error(res) {
+      alert(res.responseText);
     },
     complete() {
       if (chanName === currChan) {
@@ -419,6 +422,9 @@ function sendMessage() {
       img: false,
       content: cont
     },
+    error(res) {
+      alert(res.responseText);
+    },
     complete() {
       if (chanName === currChan) {
         startUpdateLoop(true);
@@ -535,7 +541,7 @@ function insertMessages(msgArr, prepend, scroll) {
 function textTemplate(msg) {
   return `<div class='msg'>
             <div class='nametag'>
-              <div class='pro-img' style='background-image: url("https://i.imgur.com/${msg.upic}m.png");'></div>
+              <div class='pro-img' style='background-image: url("https://i.imgur.com/${msg.upic}t.png");'></div>
               <span>${msg.nick}</span>
             </div>
             <div class='msg-text'>${msg.content}</div>

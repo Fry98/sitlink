@@ -2,12 +2,11 @@
 // Uploads image via Imgur API and returns its ID 
 // (Alternative version without cURL)
 function imgurUpload($pic, $IMGUR_TOKEN) {
-
-	// Checks file data type
-	if (substr($pic, 5, 5) !== 'image') {
+	// Checks file data type and size
+	if (substr($pic, 5, 5) !== 'image' || strlen($pic) > 5242880) {
 		return null;
 	}
-	$pic = substr($pic, strpos($pic, ',') + 1);
+  $pic = substr($pic, strpos($pic, ',') + 1);
 
 	// Makes POST request to Imgur API with the image encoded in Base64
   $url = 'https://api.imgur.com/3/image';

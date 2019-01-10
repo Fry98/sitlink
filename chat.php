@@ -8,7 +8,7 @@
     die();
   }
 
-  if (!isset($_SESSION['app']) || $_SESSION['app'] !== 'sitlink') {
+  if (!isset($_SESSION['app']) || $_SESSION['app'] !== 'sitlink' || !isset($_SESSION['id']) || !isset($_SESSION['nick']) || !isset($_SESSION['img'])) {
     session_destroy();
     header('Location: /~tomanfi2');
     die();

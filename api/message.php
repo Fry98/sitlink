@@ -127,7 +127,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
           die("Message can't be empty!");
         }
         $content = str_replace("\n", '<br>', $content);
-        $content = str_replace(" ", '&nbsp;', $content);
       }
 
       // Adds message to the DB

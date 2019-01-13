@@ -7,6 +7,7 @@ Clone this repo into the *DocumentRoot* directory of your **Apache** server and 
 ## Credits
 - **jQuery** - https://github.com/jquery/jquery
 - **particles.js** - https://github.com/VincentGarreau/particles.js/
+- **Montserrat** - https://github.com/JulietaUla/Montserrat
 
 ## License
 **MIT**

@@ -16,6 +16,7 @@ let chanIndex = null;
 let subUrlInp = '';
 let chanNameInp = '';
 const MESSAGE_LIMIT = 30;
+const msgSound = new Audio('/~tomanfi2/assets/light.mp3');
 
 // Inital page setup
 updateFollowToggle();
@@ -34,10 +35,16 @@ function startUpdateLoop(immediate) {
         },
         success(res) {
           const msgArr = JSON.parse(res);
-          if (msgArr.length > 0) {
+          if (msgArr.length > 0) {            
             insertMessages(msgArr, false, true);
             $('#ctn-wrap')[0].scrollTop = $('#ctn-wrap')[0].scrollHeight;
             lastId = msgArr[msgArr.length - 1].id;
+          }
+          for (const msg of msgArr) {
+            if (!msg.owned) {
+              msgSound.play();
+              break;
+            }
           }
         },
         error(_, status) {
@@ -539,7 +546,7 @@ function insertMessages(msgArr, prepend, scroll) {
 
 // Template for inserting text messages
 function textTemplate(msg) {
-  return `<div class='msg'>
+  return `<div class='msg ${msgOwned(msg.owned)}'>
             <div class='nametag'>
               <div class='pro-img' style='background-image: url("https://i.imgur.com/${msg.upic}t.png");'></div>
               <span>${msg.nick}</span>
@@ -550,7 +557,7 @@ function textTemplate(msg) {
 
 // Template for inserting image messages
 function imgTemplate(msg, scroll) {
-  return `<div class='msg'>
+  return `<div class='msg ${msgOwned(msg.owned)}'>
             <div class='nametag'>
               <div class='pro-img' style='background-image: url("https://i.imgur.com/${msg.upic}t.png);'></div>
               <span>${msg.nick}</span>
@@ -565,6 +572,13 @@ function imgTemplate(msg, scroll) {
     }
     return '';
   }
+}
+
+function msgOwned(owned) {
+  if (owned) {
+    return 'own';
+  }
+  return '';
 }
 
 // Fetches a block of messages from the current channel

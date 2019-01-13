@@ -47,7 +47,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         
         // Man,... fuck SQL...
-        $query = $conn->prepare("SELECT users.nick, users.img, messages.image, messages.content, messages.id FROM messages INNER JOIN users ON messages.sender = users.id WHERE messages.sub_id = :sub AND messages.channel = :chan ORDER BY messages.id DESC LIMIT :lim OFFSET :skip");
+        $query = $conn->prepare("SELECT users.nick, users.img, messages.image, messages.content, messages.id, users.id FROM messages INNER JOIN users ON messages.sender = users.id WHERE messages.sub_id = :sub AND messages.channel = :chan ORDER BY messages.id DESC LIMIT :lim OFFSET :skip");
         $query->execute(array(
           "sub" => $_GET['sub'],
           "chan" => $_GET['chan'],
@@ -68,7 +68,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
             "nick" => $row[0],
             "upic" => $row[1],
             "img" => $isImg,
-            "content"=> $row[3]
+            "content"=> $row[3],
+            "owned" => ($_SESSION['id'] === $row[5])
           ];
           $json[] = $temp;
         }

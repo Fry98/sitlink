@@ -38,7 +38,7 @@ if (isset($_GET['sub']) && isset($_GET['chan']) && isset($_GET['last']) && ctype
   }
 
   // Fetches all the lastest messages from the DB
-  $query = $conn->prepare("SELECT messages.id, users.nick, users.img, messages.image, messages.content FROM messages INNER JOIN users ON messages.sender = users.id WHERE messages.sub_id = :sub AND messages.channel = :chan AND messages.id > :lastId");
+  $query = $conn->prepare("SELECT messages.id, users.nick, users.img, messages.image, messages.content, users.id FROM messages INNER JOIN users ON messages.sender = users.id WHERE messages.sub_id = :sub AND messages.channel = :chan AND messages.id > :lastId");
   $query->execute([
     "sub" => $_GET['sub'],
     "chan" => $_GET['chan'],
@@ -58,7 +58,8 @@ if (isset($_GET['sub']) && isset($_GET['chan']) && isset($_GET['last']) && ctype
       "nick" => $row[1],
       "upic" => $row[2],
       "img" => $isImg,
-      "content"=> $row[4]
+      "content"=> $row[4],
+      "owned" => ($_SESSION['id'] === $row[5])
     ];
     $json[] = $temp;
   }

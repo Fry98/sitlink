@@ -7,7 +7,7 @@
 	<meta name="theme-color" content="#1c7ec0" />
 	<link rel="stylesheet" href="/~tomanfi2/css/signup.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
-	<script src="/~tomanfi2/js/lib/particles.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="shortcut icon" type="image/png" href="/~tomanfi2/assets/favicon.png"/>
 	<title>SITLINK</title>

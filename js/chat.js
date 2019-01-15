@@ -597,7 +597,7 @@ function fetchMessages() {
         }
         let origSize = $('#ctn-wrap')[0].scrollHeight;
         insertMessages(msgArr, true, false);
-        let offset = $('#ctn-wrap')[0].scrollHeight - origSize - 60;
+        let offset = $('#ctn-wrap')[0].scrollHeight - origSize;
         $('#ctn-wrap').scrollTop(offset);
         scrollDeac = false;
       },

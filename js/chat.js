@@ -16,7 +16,7 @@ let chanIndex = null;
 let subUrlInp = '';
 let chanNameInp = '';
 const MESSAGE_LIMIT = 30;
-const msgSound = new Audio('/~tomanfi2/assets/light.mp3');
+const msgSound = new Audio('/assets/light.mp3');
 
 // Inital page setup
 updateFollowToggle();
@@ -28,7 +28,7 @@ function startUpdateLoop(immediate) {
   clearInterval(updateLoop);
   function update() {
     if (UpdatePool === null) {
-      $.ajax(`/~tomanfi2/api/update.php?sub=${sub}&chan=${chanName}&last=${lastId}`, {
+      $.ajax(`/api/update.php?sub=${sub}&chan=${chanName}&last=${lastId}`, {
         method: 'GET',
         beforeSend (xhr) {
           UpdatePool = xhr;
@@ -169,7 +169,7 @@ reader.onload = () => {
   clearInterval(updateLoop);
   abortRequests();
   const currChan = chanName;
-  $.ajax('/~tomanfi2/api/message.php', {
+  $.ajax('/api/message.php', {
     method: 'POST',
     data: {
       sid: sub,
@@ -198,7 +198,7 @@ $('body').on('click', '.flw-list-item', function() {
     link = flwList.followed[flwIndex].id;
   }
   if (sub !== link) {
-    location.href = `/~tomanfi2/c/${link}`;
+    location.href = `/c/${link}`;
   } else {
     $('#flw-overlay').addClass('overlay-hide');
   }
@@ -206,7 +206,7 @@ $('body').on('click', '.flw-list-item', function() {
 
 // Accessing the Subchat Menu
 $('#subs').click(() => {
-  $.ajax('/~tomanfi2/api/follow.php', {
+  $.ajax('/api/follow.php', {
     method: 'GET',
     success(res) {
       flwList = JSON.parse(res);
@@ -323,7 +323,7 @@ $('#new-sub-form').submit((e) => {
     alert('Subchat description can only be up to 100 characters long!');
     return;
   }
-  $.ajax('/~tomanfi2/api/subchat.php', {
+  $.ajax('/api/subchat.php', {
     method: 'POST',
     data: {
       url: $('#new-sub-url').val().toLowerCase(),
@@ -331,7 +331,7 @@ $('#new-sub-form').submit((e) => {
       desc: $('#new-sub-desc').val()
     },
     success() {
-      location.href = `/~tomanfi2/c/${$('#new-sub-url').val()}`;
+      location.href = `/c/${$('#new-sub-url').val()}`;
     },
     error(res) {
       alert(res.responseText);
@@ -365,7 +365,7 @@ $('#new-chan-form').submit((e) => {
     return;
   }
   const newChan = $('#new-chan-url').val().toLowerCase();
-  $.ajax('/~tomanfi2/api/channel.php', {
+  $.ajax('/api/channel.php', {
     method: 'POST',
     data: {
       sub,
@@ -395,10 +395,10 @@ $('#lo-wrap').click(() => {
 // Switching SITLINK color theme
 $('#theme').click(() => {
   if (Cookies.get('light') === undefined) {
-    $('#sheet')[0].setAttribute("href", "/~tomanfi2/css/chat-light.min.css");
+    $('#sheet')[0].setAttribute("href", "/css/chat-light.min.css");
     Cookies.set('light', true);
   } else {
-    $('#sheet')[0].setAttribute("href", "/~tomanfi2/css/chat-dark.min.css");
+    $('#sheet')[0].setAttribute("href", "/css/chat-dark.min.css");
     Cookies.remove('light');
   }
 });
@@ -421,7 +421,7 @@ function sendMessage() {
   $('#msg').val('');
   resize($('#msg')[0]);
   const currChan = chanName;
-  $.ajax('/~tomanfi2/api/message.php', {
+  $.ajax('/api/message.php', {
     method: 'POST',
     data: {
       sid: sub,
@@ -490,7 +490,7 @@ function followHandler() {
     return;
   }
 
-  $.ajax('/~tomanfi2/api/follow.php', {
+  $.ajax('/api/follow.php', {
     method: 'POST',
     data: { sub },
     success() {
@@ -584,7 +584,7 @@ function msgOwned(owned) {
 // Fetches a block of messages from the current channel
 function fetchMessages() {
   if (!lastMsg) {
-    $.ajax(`/~tomanfi2/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
+    $.ajax(`/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
       method: 'GET',
       beforeSend(xhr) {
         MessagePool = xhr;
@@ -619,7 +619,7 @@ function initChannel() {
   abortRequests();
   abortMessage();
   $('#loader').css('display', 'flex');
-  $.ajax(`/~tomanfi2/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
+  $.ajax(`/api/message.php?sub=${sub}&chan=${chanName}&lim=${MESSAGE_LIMIT}&skip=${skip}`, {
     method: 'GET',
     beforeSend(xhr) {
       MessagePool = xhr;
@@ -673,7 +673,7 @@ function abortMessage() {
 
 // Removing channel
 function removeChannel() {
-  $.ajax('/~tomanfi2/api/channel.php', {
+  $.ajax('/api/channel.php', {
     method: 'DELETE',
     data: {
       sub,
@@ -703,11 +703,11 @@ function removeChannel() {
 
 // Removing subchat
 function removeSubchat() {
-  $.ajax('/~tomanfi2/api/subchat.php', {
+  $.ajax('/api/subchat.php', {
     method: 'DELETE',
     data: { sub },
     success() {
-      location.href = '/~tomanfi2';
+      location.href = '/';
     },
     error(res) {
       alert(res.responseText);

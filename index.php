@@ -2,7 +2,7 @@
 	// Chat redirect
 	session_start();
 	if (!empty($_SESSION)) {
-		header('Location: /~tomanfi2/c/nexus');
+		header('Location: /c/nexus');
 		die();
 	}
 ?>
@@ -13,23 +13,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="theme-color" content="#1c7ec0" />
-	<link rel="stylesheet" href="/~tomanfi2/css/login.min.css">
+	<link rel="stylesheet" href="/css/login.min.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="shortcut icon" type="image/png" href="/~tomanfi2/assets/favicon.png"/>
+	<link rel="shortcut icon" type="image/png" href="/assets/favicon.png"/>
 	<title>SITLINK</title>
 </head>
 <body>
 	<!-- Logo for the desktop vesrion -->
-	<img id='logo' src="/~tomanfi2/assets/logo.png" alt='Website Logo'>
+	<img id='logo' src="/assets/logo.png" alt='Website Logo'>
 	<!-- Login box -->
 	<div id='log-scr'>
 		<h2>Welcome back!</h2>
 		<h3>You are just one click away...</h3>
 		<form method='POST'>
 			<!-- Logo for the mobile version -->
-			<img src="/~tomanfi2/assets/logo.png" alt='Website Logo'>
+			<img src="/assets/logo.png" alt='Website Logo'>
 			<!-- Input fields -->
 			<div class='inp-box'>
 				<label for="nick">USERNAME</label>
@@ -49,6 +49,6 @@
 	</div>
 	<!-- Background layer -->
   <div id="particles-js"></div>
-	<script src='/~tomanfi2/js/login.js'></script>
+	<script src='/js/login.js'></script>
 </body>
 </html>

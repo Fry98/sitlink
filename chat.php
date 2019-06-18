@@ -4,13 +4,13 @@
   // Session check
   session_start();
   if (empty($_SESSION)) {
-		header('Location: /~tomanfi2');
+		header('Location: /');
     die();
   }
 
   if (!isset($_SESSION['app']) || $_SESSION['app'] !== 'sitlink' || !isset($_SESSION['id']) || !isset($_SESSION['nick']) || !isset($_SESSION['img'])) {
     session_destroy();
-    header('Location: /~tomanfi2');
+    header('Location: /');
     die();
   }
   
@@ -26,7 +26,7 @@
   ));
   $res = $query->fetch();
   if (empty($res)) {
-		header('Location: /~tomanfi2/c/nexus');
+		header('Location: /c/nexus');
     die();
   }
   $name = $res[1];
@@ -90,13 +90,13 @@
   <meta name="theme-color" content="#1c7ec0" />
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
   <?php if (isset($_COOKIE['light'])) { ?>
-    <link id='sheet' rel="stylesheet" href="/~tomanfi2/css/chat-light.min.css">
+    <link id='sheet' rel="stylesheet" href="/css/chat-light.min.css">
   <?php } else { ?>
-    <link id='sheet' rel="stylesheet" href="/~tomanfi2/css/chat-dark.min.css">
+    <link id='sheet' rel="stylesheet" href="/css/chat-dark.min.css">
   <?php } ?>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-  <link rel="shortcut icon" type="image/png" href="/~tomanfi2/assets/favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="/assets/favicon.png"/>
   <title>SITLINK</title>
 </head>
 <body>
@@ -189,7 +189,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 0H0v24h24z" fill="none"/><path d="M17.66 7.93L12 2.27 6.34 7.93c-3.12 3.12-3.12 8.19 0 11.31C7.9 20.8 9.95 21.58 12 21.58c2.05 0 4.1-.78 5.66-2.34 3.12-3.12 3.12-8.19 0-11.31zM12 19.59c-1.6 0-3.11-.62-4.24-1.76C6.62 16.69 6 15.19 6 13.59s.62-3.11 1.76-4.24L12 5.1v14.49z"/></svg>
     </div>
     <!-- Logout button -->
-    <a id='lo-wrap' href="/~tomanfi2/api/logout.php">
+    <a id='lo-wrap' href="/api/logout.php">
       <div id='logout'>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
       </div>
@@ -249,10 +249,10 @@
   <script>
     // Variables injected from PHP into the front-end
     const sub = "<?= $_GET['sub'] ?>";
-    let chans = JSON.parse(`<?= json_encode($res) ?>`);
+    let chans = <?= json_encode($res) ?>;
     let admin = <?= boolPass($admin) ?>;
     let followed = <?= boolPass($followed) ?>;
   </script>
-  <script src="/~tomanfi2/js/chat.js"></script>
+  <script src="/js/chat.js"></script>
 </body>
 </html>
